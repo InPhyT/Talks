@@ -1,0 +1,64 @@
+project:
+  type: default
+  preview:
+    port: 4200
+
+# Authors 
+authors:
+  - name: Pietro Monticone
+    orcid: 0000-0002-2731-9623
+    url: https://github.com/pitmonticone
+    attributes:
+      corresponding: true
+    affiliation: 
+      - ref: UniTo
+  - name: Claudio Moroni
+    orcid: 0000-0003-1274-6937
+    url: https://github.com/ClaudMor
+    attributes:
+      corresponding: true
+    affiliation: 
+      - ref: UniTo
+
+# Affiliations
+affiliations:
+  - id: UniTo
+    name: University of Turin
+    city: Turin
+    state: Italy
+
+## Presentation 
+format:
+  revealjs:
+    css: styles.css
+    chalkboard: 
+        buttons: false
+    footer: "..."
+    logo: images/logo/...
+    preview-links: auto
+    slide-number: true
+    theme: default
+    toc: false
+    toc-title: "Contents"
+    toc-depth: 1
+    menu: true
+
+# Date and Time
+date: today
+date-format: iso
+
+# Jupyter Kernels 
+jupyter: julia-1.8
+
+execute:
+  echo: true
+
+# Extra 
+from: markdown+emoji
+
+# References 
+crossref:
+  fig-prefix: Figure
+  tbl-prefix: Table
+bibliography: references.bib
+fig-format: png
