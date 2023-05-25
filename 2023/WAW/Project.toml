@@ -1,0 +1,5 @@
+[deps]
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
+MultilayerGraphs = "af984530-d72f-4904-8b81-b992bbbeaf3f"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
