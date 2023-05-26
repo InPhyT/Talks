@@ -230,6 +230,25 @@ For further information see the related [issues](https://github.com/JuliaGraphs/
 ![](images/articles/Pilosof2017.webp){.absolute bottom=10 right=30 width=40%}
 :::
 
+<!-- https://github.com/quarto-dev/quarto-cli/discussions/4572 -->
+```{=html}
+<style>
+.semi-transparent {
+  opacity: 0.3;
+}
+</style>
+
+<style>
+.center-y {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+</style>
+```
+
 ::::
 
 # :computer: Practice 
