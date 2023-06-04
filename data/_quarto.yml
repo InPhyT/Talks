@@ -48,7 +48,7 @@ date: today
 date-format: iso
 
 # Jupyter Kernels 
-jupyter: julia-1.8
+jupyter: julia-1.9
 
 execute:
   echo: true
