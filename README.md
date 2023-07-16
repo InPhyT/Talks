@@ -13,7 +13,7 @@
 - **Who:** [Pietro Monticone](https://github.com/pitmonticone) and [Claudio Moroni](https://github.com/ClaudMor)
 - **What:** "Multilayer Network Science in Julia with [`MultilayerGraphs.jl`](https://github.com/JuliaGraphs/MultilayerGraphs.jl)" ([Website](http://www.fields.utoronto.ca/talks/Multilayer-Network-Science-Julia-MultilayerGraphsjl), [Slides](https://inphyt.github.io/Talks/2023/WAW/index.html), [Video](https://youtu.be/hB8Vrwkwax0))
 
-### [JuliaCon](https://juliacon.org/2023/)
+### [JuliaCon 2023](https://juliacon.org/2023/)
 
 - **When:** 2023/07/25 - 2023/07/29
 - **Where:** [Massachusetts Institute of Technology](https://www.mit.edu), Cambridge, MA, USA
