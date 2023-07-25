@@ -39,7 +39,7 @@ format:
     menu: true
 
 # Date and Time
-date: today
+date: 2023-07-27
 date-format: iso
 
 # Jupyter Kernels 
