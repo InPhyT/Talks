@@ -29,6 +29,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
   <link rel="stylesheet" href="styles.css">
@@ -352,13 +417,700 @@
 
   <p class="date">2023-07-27</p>
 </section>
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="clapper">🎬</span> Introduction</h1>
+
+</section>
 <section class="slide level2">
 
+<h3 id="outline">Outline</h3>
+<p><span class="emoji" data-emoji="one">1️⃣</span> <a href="#/Theory">Theory</a></p>
+<p><span class="emoji" data-emoji="two">2️⃣</span> <a href="#/Applications">Applications</a></p>
+<p><span class="emoji" data-emoji="three">3️⃣</span> <a href="#/Practice">Practice</a></p>
+<h3 id="resources">Resources</h3>
+<p><img data-src="images/logo/GitHub.svg" class="absolute" style="left: 0px; bottom: 302px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl">Repository</a></p>
+<p><img data-src="images/logo/JOSS.png" class="absolute" style="left: 0px; bottom: 237px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://doi.org/10.21105/joss.05116">Paper</a></p>
+<p><img data-src="images/logo/JuliaDots.svg" class="absolute" style="left: 0px; bottom: 176px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://juliagraphs.org/MultilayerGraphs.jl/dev">Documentation</a></p>
+<p><img data-src="images/logo/Discourse.png" class="absolute" style="left: 0px; bottom: 113px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Post (<a href="https://discourse.julialang.org/t/ann-multilayergraphs-jl-a-package-to-construct-handle-and-analyse-multilayer-graphs/85988">v0.1</a>, <a href="https://discourse.julialang.org/t/ann-multilayergraphs-jl-v1-1-multilayer-network-science-in-julia/92680">v1.1</a>)</p>
+<p><img data-src="images/logo/Twitter.png" class="absolute" style="left: 0px; bottom: 51px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread (<a href="https://twitter.com/In_Phy_T/status/1560594513189638146">v0.1</a>, <a href="https://twitter.com/In_Phy_T/status/1612460371939581955">v1.1</a>)</p>
+<p><img data-src="images/logo/MultilayerGraphs.png" class="absolute" style="bottom: 190px; right: 0px; width: 40%; "></p>
+</section></section>
+<section>
+<section id="theory" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="notebook">📓</span> Theory</h1>
 
-<img src="images/logo/JuliaCon.png" class="slide-logo r-stretch"><div class="footer footer-default">
-<p><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl">MultilayerGraphs.jl: Multilayer Network Science in Julia</a></p>
+</section>
+<section id="conceptual-framework" class="slide level2 smaller">
+<h2>Conceptual Framework</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Network</li>
+<li>Graph</li>
+<li>Vertex (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerVertex"><code>MultilayerVertex</code></a>)</li>
+<li>Node (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.Node"><code>Node</code></a>)</li>
+<li>Layer (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.Layer"><code>Layer</code></a>)</li>
+<li>Intra-layer edge (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerEdge"><code>MultilayerEdge</code></a>)</li>
+<li>Inter-layer edge (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerEdge"><code>MultilayerEdge</code></a>)</li>
+<li>Interlayer (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.Interlayer"><code>Interlayer</code></a>)</li>
+<li>Multilayer (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerGraph"><code>MultilayerGraph</code></a>)</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/books/basics.png" class="absolute" style="bottom: 50px; right: -250px; width: 75%; "></p>
+</div>
+</div>
+
+<aside><div>
+<p>Figure from <a href="https://doi.org/10.1007/978-3-030-75718-2">De Domenico (2022)</a>.</p>
+</div></aside></section>
+<section id="conceptual-framework-1" class="slide level2 smaller">
+<h2>Conceptual Framework</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<h4 id="intra-layer-interactions">Intra-layer Interactions</h4>
+<ul>
+<li>Self</li>
+<li>Endogenous</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<h4 id="inter-layer-interactions">Inter-layer interactions</h4>
+<ul>
+<li>Exogenous</li>
+<li>Intertwining</li>
+</ul>
+</div>
+</div>
+<p><img data-src="images/books/taxonomy.png" class="absolute" style="bottom: 80px; right: 120px; width: 80%; "></p>
+
+<aside><div>
+<p>Figure from <a href="https://doi.org/10.1007/978-3-030-75718-2">De Domenico (2022)</a>.</p>
+</div></aside></section>
+<section id="mathematical-framework" class="slide level2 smaller">
+<h2>Mathematical Framework</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<h4 id="mono-layer-adjacency-tensor-weighttensor">Mono-Layer Adjacency Tensor (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.WeightTensor"><code>WeightTensor</code></a>)</h4>
+<p><span class="math display">\[\begin{align*}
+W_j^i&amp;=\sum_{a, b=1}^N w_{a b} e^i(a) e_j(b)=\sum_{a, b=1}^N w_{a b} E_j^i(a b)
+\end{align*}\]</span></p>
+<h4 id="multi-layer-adjacency-tensor-weighttensor">Multi-Layer Adjacency Tensor (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.WeightTensor"><code>WeightTensor</code></a>)</h4>
+<p><span class="math display">\[\begin{align*}
+M_{j \beta}^{i \alpha}&amp;=\sum_{a, b=1}^N \sum_{p, q=1}^L w_{a b}(p q) e^i(a) e_j(b) e^\alpha(p) e_\beta(q) \\
+&amp;=\underbrace{m_{i \alpha}^{j \beta} \delta_\alpha^\beta \delta_i^j+m_{i \alpha}^{j \beta} \delta_\alpha^\beta\left(1-\delta_i^j\right)}_{\text {intra-layer}}+\underbrace{m_{i \alpha}^{j \beta}\left(1-\delta_\alpha^\beta\right) \delta_i^j+m_{i \alpha}^{j \beta}\left(1-\delta_\alpha^\beta\right)\left(1-\delta_i^j\right)}_{\text {inter-layer}} \\
+&amp;=\underbrace{m_{i \alpha}^{i \alpha}}_{\text {self}}+\underbrace{m_{i \alpha}^{j \alpha}}_{\text {endogenous}}+\underbrace{m_{i \alpha}^{j \beta}}_{\text {exogenous}}+\underbrace{m_{i \alpha}^{i \beta}}_{\text {intertwining}}
+\end{align*}\]</span></p>
+</div><div class="column" style="width:50%;">
+
+</div>
 </div>
 </section>
+<section id="mathematical-framework-1" class="slide level2 smaller">
+<h2>Mathematical Framework</h2>
+<h4 id="supra-adjacency-matrix-supraweightmatrix">Supra-Adjacency Matrix (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.SupraWeightMatrix"><code>SupraWeightMatrix</code></a>)</h4>
+<p><img data-src="images/books/supra-adjacency-matrix.png" class="absolute" style="bottom: 120px; right: 100px; width: 85%; "></p>
+
+<aside><div>
+<p>Figure from <a href="https://doi.org/10.1007/978-3-030-75718-2">De Domenico (2022)</a>.</p>
+</div></aside></section>
+<section id="mathematical-framework-2" class="slide level2 smaller">
+<h2>Mathematical Framework</h2>
+<h3 id="metrics">Metrics</h3>
+<h4 id="degree-centrality-degree">Degree Centrality (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#Graphs.degree-Union%7BTuple%7BV%7D,%20Tuple%7BM%7D,%20Tuple%7BType%7BIsDirected%7BM%7D%7D,%20M,%20V%7D%7D%20where%20%7BM%3C:AbstractMultilayerGraph,%20V%3C:MultilayerVertex%7D"><code>degree</code></a>)</h4>
+<p><span class="math inline">\(k_i=\sum_{\alpha, \beta=1}^L \sum_{j=1}^N M_{j \beta}^{i \alpha}=M_{j \beta}^{i \alpha} u_\alpha^\beta u^j\)</span></p>
+<h4 id="eigenvector-centrality-eigenvector_centrality">Eigenvector Centrality (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#Graphs.eigenvector_centrality-Union%7BTuple%7BM%7D,%20Tuple%7BU%7D,%20Tuple%7BT%7D%7D%20where%20%7BT,%20U,%20M%3C:AbstractMultilayerGraph%7BT,%20U%7D%7D"><code>eigenvector_centrality</code></a>)</h4>
+<p><span class="math inline">\(\sum_{i, \alpha} M_{j \beta}^{i \alpha} \Theta_{i \alpha}=\lambda_1 \Theta_{j \beta}\)</span></p>
+<h4 id="modularity-modularity">Modularity (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#Graphs.modularity-Union%7BTuple%7BM%7D,%20Tuple%7BU%7D,%20Tuple%7BT%7D,%20Tuple%7BM,%20Matrix%7BInt64%7D%7D%7D%20where%20%7BT,%20U,%20M%3C:AbstractMultilayerGraph%7BT,%20U%7D%7D"><code>modularity</code></a>)</h4>
+<p><span class="math inline">\(Q=\frac{1}{\mathcal{K}} S_{\alpha \tilde{\rho}}^a B_{\beta \tilde{\sigma}}^{\alpha \tilde{\rho}} S_a^{\beta \tilde{\sigma}}\)</span></p>
+<h4 id="von-neumann-entropy-von_neumann_entropy">Von Neumann Entropy (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.von_neumann_entropy-Union%7BTuple%7BM%7D,%20Tuple%7BU%7D,%20Tuple%7BT%7D,%20Tuple%7BType%7BNot%7BIsDirected%7BM%7D%7D%7D,%20M%7D%7D%20where%20%7BT,%20U,%20M%3C:AbstractMultilayerGraph%7BT,%20U%7D%7D"><code>von_neumann_entropy</code></a>)</h4>
+<p><span class="math inline">\(\mathcal{H}(M)=-\Lambda_{\beta \tilde{\delta}}^{\alpha \tilde{\gamma}} \log _2\left[\Lambda_{\alpha \tilde{\gamma}}^{\beta \tilde{\delta}}\right]\)</span></p>
+</section></section>
+<section>
+<section id="applications" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="microscope">🔬</span> Applications</h1>
+
+</section>
+<section id="multilayer-network-epidemiology" class="slide level2 smaller">
+<h2>Multilayer Network Epidemiology</h2>
+<p><img data-src="images/articles/Aleta2020-model.webp" class="absolute" style="top: 120px; left: 0px; width: 50%; "> <img data-src="images/articles/Aleta2022.jpeg" class="absolute" style="top: 120px; right: -100px; width: 50%; "></p>
+
+<aside><div>
+<p>Figures from <a href="https://doi.org/10.1038/s41562-020-0931-9">Aleta et al.&nbsp;(2020)</a> and <a href="https://doi.org/10.1073/pnas.2112182119">Aleta et al.&nbsp;(2022)</a>.</p>
+</div></aside></section></section>
+<section>
+<section id="future-developments" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="dart">🎯</span> Future Developments</h1>
+
+</section>
+<section id="future-developments-1" class="slide level2 smaller">
+<h2>Future Developments</h2>
+<ul>
+<li>Import/export</li>
+<li>Data visualisation</li>
+<li>Coverage evolution (e.g.&nbsp;see <a href="https://doi.org/10.1073/pnas.1318469111">De Domenico (2014)</a>)</li>
+<li>Community detection algorithms (e.g.&nbsp;see <a href="https://doi.org/10.1103/PhysRevX.5.011027">De Domenico et al.&nbsp;(2015)</a>)</li>
+<li>Laplacian matrix</li>
+<li>Components (e.g.&nbsp;connected, giant connected, giant intersection, giant viable)</li>
+<li>Multiplexity dimensions (“aspects”)</li>
+<li>Global descriptors (e.g.&nbsp;see <a href="https://doi.org/10.1103/PhysRevX.3.041022">De Domenico (2013)</a>);</li>
+<li>More multilayer centralities / versatilities (e.g.&nbsp;see <a href="https://doi.org/10.1038/ncomms7868">De Domenico et al.&nbsp;(2015)</a>);</li>
+<li>…</li>
+</ul>
+<p>For further information see the related <a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues">issues</a>.</p>
+</section></section>
+<section>
+<section id="related-packages" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="package">📦</span> Related Packages</h1>
+
+</section>
+<section id="related-packages-1" class="slide level2">
+<h2>Related Packages</h2>
+<p><img data-src="images/logo/Python.png" class="absolute" style="top: 80px; left: 0px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/nkoub/multinetx"><code>MultiNetX</code></a></p>
+<p><img data-src="images/logo/Python.png" class="absolute" style="top: 147px; left: 0px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/bolozna/Multilayer-networks-library"><code>PyMNet</code></a></p>
+<p><br></p>
+<p><img data-src="images/logo/R.png" class="absolute" style="top: 278px; left: 0px; width: 5%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/manlius/muxViz"><code>muxViz</code></a></p>
+<p><img data-src="images/logo/R.png" class="absolute" style="top: 340px; left: 0px; width: 5%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/cran/multinet"><code>multinet</code></a></p>
+<p><img data-src="images/logo/R.png" class="absolute" style="top: 406px; left: 0px; width: 5%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/frankkramer-lab/mully"><code>mully</code></a></p>
+<p><img data-src="images/logo/R.png" class="absolute" style="top: 470px; left: 0px; width: 5%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/neylsoncrepalde/multinets"><code>multinets</code></a></p>
+</section></section>
+<section>
+<section id="references" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="books">📚</span> References</h1>
+
+</section>
+<section id="theory-1" class="slide level2 smaller">
+<h2>Theory</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ol type="1">
+<li><a href="https://doi.org/10.1103/PhysRevX.3.041022">De Domenico et al.&nbsp;(2013)</a></li>
+<li><a href="https://doi.org/10.1093/comnet/cnu016">Kivelä et al.&nbsp;(2014)</a></li>
+<li><a href="https://doi.org/10.1016/j.physrep.2014.07.001">Boccaletti et al.&nbsp;(2014)</a></li>
+<li><a href="https://doi.org/10.1140/epjb/e2015-50742-1">Lee et al.&nbsp;(2015)</a></li>
+<li><a href="https://global.oup.com/academic/product/multilayer-networks-9780192865540">Bianconi (2018)</a></li>
+<li><a href="https://doi.org/10.1007/978-3-319-92255-3">Cozzo et al.&nbsp;(2018)</a></li>
+<li><a href="https://doi.org/10.1146/annurev-conmatphys-031218-013259">Aleta and Moreno (2019)</a></li>
+<li><a href="https://doi.org/10.1017/9781009085809">Artime et al.&nbsp;(2022)</a></li>
+<li><a href="https://doi.org/10.1007/978-3-030-75718-2">De Domenico (2022)</a></li>
+</ol>
+</div><div class="column" style="width:60%;">
+<p><img data-src="images/books/Bianconi2018.png" class="absolute" style="top: -25px; right: 300px; width: 23%; "> <img data-src="images/books/Artime2022.png" class="absolute" style="bottom: 0px; right: 300px; width: 23%; "> <img data-src="images/books/DeDomenico2022.webp" class="absolute" style="bottom: 170px; right: 0px; width: 27%; "></p>
+</div>
+</div>
+</section>
+<section id="applications-1" class="slide level2 smaller">
+<h2>Applications</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ol type="1">
+<li><a href="https://doi.org/10.1103/physreve.88.050801">Cozzo et al.&nbsp;(2013)</a></li>
+<li><a href="https://doi.org/10.1103/physrevlett.111.128701">Granell et al.&nbsp;(2013)</a></li>
+<li><a href="https://doi.org/10.1103/physreve.90.052817">Massaro and Bagnoli (2014)</a></li>
+<li><a href="https://doi.org/10.1103/physreve.89.042819">Estrada and Gomez-Gardenes (2014)</a></li>
+<li><a href="https://doi.org/10.1038/nphys3865">De Domenico et al.&nbsp;(2016)</a></li>
+<li><a href="https://doi.org/10.1038/s41598-017-06933-2">Amato et al.&nbsp;(2017)</a></li>
+<li><a href="https://doi.org/10.1093/gigascience/gix004">De Domenico (2017)</a></li>
+<li><a href="https://doi.org/10.1038/s41559-017-0101">Pilosof et al.&nbsp;(2017)</a></li>
+<li><a href="https://doi.org/10.1038/s41598-019-39243-w">Lim et al.&nbsp;(2019)</a></li>
+<li><a href="https://doi.org/10.1109/tnse.2018.2871726">Mangioni et al.&nbsp;(2020)</a></li>
+<li><a href="https://doi.org/10.1038/s41562-020-0931-9">Aleta et al.&nbsp;(2020)</a></li>
+<li><a href="https://doi.org/10.1073/pnas.2112182119">Aleta et al.&nbsp;(2022)</a></li>
+</ol>
+</div><div class="column" style="width:50%;">
+<p><img data-src="images/articles/Pilosof2017.webp" class="absolute" style="bottom: 10px; right: 30px; width: 40%; "></p>
+</div><!-- https://github.com/quarto-dev/quarto-cli/discussions/4572 --><style>
+.semi-transparent {
+  opacity: 0.3;
+}
+</style>
+
+<style>
+.center-y {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+</style>
+</div>
+</section></section>
+<section>
+<section id="practice" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="computer">💻</span> Practice</h1>
+
+</section>
+<section class="slide level2">
+
+<p>In this section, we are going to see:</p>
+<ol type="1">
+<li>Overview of <code>Graphs.jl</code>;</li>
+<li>Main design features;</li>
+<li>Brief showcase;</li>
+<li>Future developments.</li>
+</ol>
+</section></section>
+<section>
+<section id="practice-1" class="title-slide slide level1 smaller center">
+<h1><span class="semi-transparent">Practice</span></h1>
+<p><span class="semi-transparent">In this section, we are going to see:</span></p>
+<ol type="1">
+<li><p>Overview of <code>Graphs.jl</code>:</p>
+<p>1.1 How is <code>MultilayerGraphs.jl</code> inspired by and built around <code>Graphs.jl</code>?</p>
+<p>1.2 Traits usage.</p></li>
+</ol>
+<p><span class="semi-transparent">2. Main design features;</span></p>
+<p><span class="semi-transparent">3. Brief showcase.</span></p>
+<p><span class="semi-transparent">4. Future developments;</span></p>
+</section>
+<section id="overview-of-graphs.jl-how-is-multilayergraphs.jl-inspired-by-and-built-around-graphs.jl" class="slide level2 smaller">
+<h2>Overview of <code>Graphs.jl</code>: How is <code>MultilayerGraphs.jl</code> inspired by and built around <code>Graphs.jl</code>?</h2>
+<ol type="1">
+<li>Julia’s graph ecosystem is built around <code>Graphs.jl</code>;</li>
+</ol>
+<div class="fragment">
+<ol start="2" type="1">
+<li><code>Graphs.jl</code> is thought to be extended by being built around a <a href="https://juliagraphs.org/%60Graphs.jl%60/dev/ecosystem/interface/">minimal set of APIs</a>: (<code>edges</code>,<code>Base.eltype</code>,<code>edgetype</code>,<code>has_edge</code>,<code>has_vertex</code>,<code>inneighbors</code>,<code>ne</code>,<code>nv</code>,<code>outneighbors</code>,<code>vertices</code>,<code>is_directed</code>);</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="3" type="1">
+<li>Once you have overloaded the above methods on <code>YourGraphType</code> (coming from <code>YourGraphPackage</code>), then you may use all Graphs.jl’s metrics and methods:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">using</span> <span class="bu">Graphs</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">using</span> <span class="bu">YourGraphPackage</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>your_graph <span class="op">=</span> <span class="fu">YourGraphType</span>()</span>
+<span id="cb1-5"><a href="#cb1-5"></a>Graphs.<span class="fu">clustering_coefficient</span>(your_graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!-- . . .
+
+3. Within `Graphs.jl`, graphs are represented using *forward* and *backward adjacency lists*, and great care is taken to have the vertices always in *increasing order* with no gaps. -->
+</div>
+</section>
+<section id="overview-of-graphs.jl-traits-usage-1" class="slide level2">
+<h2>Overview of <code>Graphs.jl</code>: Traits usage #1</h2>
+<ul>
+<li>Single-inheritance + traits = multiple-inheritance(-ish);</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Traits as properties.</li>
+</ul>
+</div>
+</section>
+<section id="overview-of-graphs.jl-traits-usage-2" class="slide level2 smaller">
+<h2>Overview of <code>Graphs.jl</code>: Traits usage #2</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Suppose we have the following abstract_graph types:</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">abstract type</span> abstract_graph <span class="kw">end</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">struct</span> simple_graph <span class="op">&lt;:</span><span class="dt"> abstract_graph </span><span class="kw">end</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">struct</span> simple_directed_graph <span class="op">&lt;:</span><span class="dt"> abstract_graph </span><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Basically, traits are given via a type hierarchy:</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">abstract type</span> Directedness <span class="kw">end</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">struct</span> Directed <span class="op">&lt;:</span><span class="dt"> Directedness </span><span class="kw">end</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw">struct</span> Undirected <span class="op">&lt;:</span><span class="dt"> Directedness </span><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Graph types are assigned their respective trait:</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">Directedness</span>(<span class="op">::</span><span class="dt">Type{simple_graph}</span>) <span class="op">=</span> <span class="fu">Undirected</span>()</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">Directedness</span>(<span class="op">::</span><span class="dt">Type{simple_directed_graph}</span>) <span class="op">=</span> <span class="fu">Directed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># And finally dispatch can be implemented:</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">function</span> <span class="fu">add_edge!</span>(<span class="op">::</span><span class="dt">Directed</span>, <span class="op">::</span><span class="dt">abstract_graph</span>, new_edge)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="co"># ...</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="kw">end</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="kw">function</span> <span class="fu">add_edge!</span>(<span class="op">::</span><span class="dt">Undirected</span>, <span class="op">::</span><span class="dt">abstract_graph</span>, new_edge)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="co"># ...</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># So that the API can look like:</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">add_edge!</span>(g<span class="op">::</span><span class="dt">simple_graph</span>, new_edge) <span class="op">=</span> <span class="fu">add_edge!</span>(<span class="fu">Directedness</span>(g), g, new_edge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="overview-of-graphs.jl-traits-usage-3" class="slide level2">
+<h2>Overview of <code>Graphs.jl</code>: Traits usage #3</h2>
+<div class="center-y">
+<p><em>Traits stratify types horizontally while (single) inheritance stratifies vertically (i.e.&nbsp;creates a type hierarchy).</em></p>
+</div>
+</section></section>
+<section>
+<section id="practice-2" class="title-slide slide level1 smaller center">
+<h1><span class="semi-transparent">Practice</span></h1>
+<p><span class="semi-transparent">In this section, we are going to see:</span></p>
+<p><span class="semi-transparent">1. Overview of <code>Graphs.jl</code></span></p>
+<ol start="2" type="1">
+<li><p>Main design features:</p>
+<p>2.1 Sub-ecosystem;</p>
+<p>2.2 Standalone graph types &gt; graph wrappers;</p>
+<p>2.3 Main structs.</p></li>
+</ol>
+<p><span class="semi-transparent">3. Brief showcase.</span></p>
+<p><span class="semi-transparent">4. Future developments;</span></p>
+</section>
+<section id="main-design-features-sub-ecosystem" class="slide level2 smaller">
+<h2>Main design features: Sub-ecosystem</h2>
+<ul>
+<li>MultilayerGraphs.jl aims to be a <em>sub-ecosystem</em> of <code>Graphs.jl</code>, specialized in multilayer graphs;</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><p>This is made possible by the <em>multiple inheritance</em> as explained earlier:</p>
+<ul>
+<li><p>Hierarchical relations are given by single inheritance (e.g.&nbsp;<code>MultilayerGraph &lt;: AbstractMultilayerGraph</code>);</p></li>
+<li><p>Variants of the same type of multilayer graph are distinguished by traits (e.g.&nbsp;<code>MultilayerDiGraph</code> is given the <code>IsDirected</code> trait while <code>MultilayerGraph</code> is not).</p></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="main-design-features-standalone-graph-types-graph-wrappers" class="slide level2">
+<h2>Main design features: Standalone graph types &gt; graph wrappers</h2>
+<ul>
+<li>Many attempts were made to implement <code>MultilayerGraphs.jl</code> as a <em>wrapper package</em>;</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Implementing a wrapper package looks easier than a <em>full implementation</em> at first…</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>…but it becomes nightmare-ish when one needs to modify graphs due to <em>function duplication</em> and <em>consistency checks</em>.</li>
+</ul>
+</div>
+</section>
+<section id="main-design-features-main-structs-1" class="slide level2 smaller">
+<h2>Main design features: main structs #1</h2>
+<p>Nodes:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">struct</span> Node <span class="op">&lt;:</span><span class="dt"> AbstractNode</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>    id<span class="op">::</span><span class="dt">String</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Vertices:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">struct</span> MultilayerVertex</span>
+<span id="cb8-2"><a href="#cb8-2"></a>    node<span class="op">::</span><span class="dt">Node</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    layer<span class="op">::</span><span class="dt">Union{Nothing,Symbol}</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>    metadata<span class="op">::</span><span class="dt">Union{&lt;:NamedTuple,&lt;:Tuple}</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Edges:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">struct</span> MultilayerEdge{U<span class="op">&lt;:</span><span class="dt">Union{&lt;:Real,Nothing}</span>} <span class="op">&lt;:</span><span class="dt"> AbstractMultilayerEdge{U}</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>    src<span class="op">::</span><span class="dt">AbstractMultilayerVertex</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>    dst<span class="op">::</span><span class="dt">AbstractMultilayerVertex</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>    weight<span class="op">::</span><span class="dt">U</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>    metadata<span class="op">::</span><span class="dt">Union{NamedTuple,Tuple}</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="main-design-features-main-structs-2" class="slide level2 smaller">
+<h2>Main design features: main structs #2</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Layers</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">mutable struct</span> Layer{T<span class="op">&lt;:</span><span class="dt">Integer</span>,U<span class="op">&lt;:</span><span class="dt">Real</span>,G<span class="op">&lt;:</span><span class="dt">AbstractGraph{T}</span>} <span class="op">&lt;:</span><span class="dt"> AbstractLayer{T,U,G}</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>    name<span class="op">::</span><span class="dt">Symbol</span>,</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    vertices<span class="op">::</span><span class="dt">Union{Vector{MultilayerVertex{nothing}},Vector{Node}}</span>,</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    edge_list<span class="op">::</span><span class="dt">Union{Vector{&lt;:MultilayerEdge},Vector{NTuple{2,MultilayerVertex{nothing}}}}</span>,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>    null_graph<span class="op">::</span><span class="dt">G</span>,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>    weighttype<span class="op">::</span><span class="dt">Type{U}</span>;</span>
+<span id="cb10-8"><a href="#cb10-8"></a>    default_vertex_metadata<span class="op">::</span><span class="dt">Function</span>=mv <span class="op">-&gt;</span> <span class="fu">NamedTuple</span>(),</span>
+<span id="cb10-9"><a href="#cb10-9"></a>    default_edge_weight<span class="op">::</span><span class="dt">Function</span>=(src, dst) <span class="op">-&gt;</span> <span class="fu">one</span>(U),</span>
+<span id="cb10-10"><a href="#cb10-10"></a>    default_edge_metadata<span class="op">::</span><span class="dt">Function</span>=(src, dst) <span class="op">-&gt;</span> <span class="fu">NamedTuple</span>(),</span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Interlayers</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">struct</span> Interlayer{T,U}</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    layer_1<span class="op">::</span><span class="dt">Layer{T,U}</span>,</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    layer_2<span class="op">::</span><span class="dt">Layer{T,U}</span>,</span>
+<span id="cb11-5"><a href="#cb11-5"></a>    null_graph<span class="op">::</span><span class="dt">G</span>,</span>
+<span id="cb11-6"><a href="#cb11-6"></a>    edge_list<span class="op">::</span><span class="dt">Union{</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="dt">        &lt;:Vector{&lt;:MultilayerEdge{&lt;:Union{U,Nothing}}},</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="dt">        &lt;:Vector{&lt;:Tuple{&lt;:MultilayerVertex,&lt;:MultilayerVertex}},</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="dt">    }</span>;</span>
+<span id="cb11-10"><a href="#cb11-10"></a>    default_edge_weight<span class="op">::</span><span class="dt">Function</span>=(x, y) <span class="op">-&gt;</span> <span class="cn">nothing</span>,</span>
+<span id="cb11-11"><a href="#cb11-11"></a>    default_edge_metadata<span class="op">::</span><span class="dt">Function</span>=(x, y) <span class="op">-&gt;</span> <span class="fu">NamedTuple</span>(),</span>
+<span id="cb11-12"><a href="#cb11-12"></a>    transfer_vertex_metadata<span class="op">::</span><span class="dt">Bool</span>=<span class="cn">false</span>,</span>
+<span id="cb11-13"><a href="#cb11-13"></a>    interlayer_name<span class="op">::</span><span class="dt">Symbol</span>=<span class="fu">Symbol</span>(<span class="st">"interlayer_</span><span class="sc">$</span>(layer_1.name)<span class="st">_</span><span class="sc">$</span>(layer_2.name)<span class="st">"</span>)</span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="main-design-features-main-structs-3" class="slide level2">
+<h2>Main design features: main structs #3</h2>
+<p>Undirected, general multilayer graph:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">mutable struct</span> MultilayerGraph{T,U} <span class="op">&lt;:</span><span class="dt"> AbstractMultilayerGraph{T,U}</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>    layers<span class="op">::</span><span class="dt">Vector{LayerDescriptor{T,U}}</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>    interlayers<span class="op">::</span><span class="dt">OrderedDict{Set{Symbol},InterlayerDescriptor{T,U}} </span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>    v_V_associations<span class="op">::</span><span class="dt">Bijection{T,&lt;:MultilayerVertex}</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>    idx_N_associations<span class="op">::</span><span class="dt">Bijection{Int64,Node}</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>    fadjlist<span class="op">::</span><span class="dt">Vector{Vector{HalfEdge{&lt;:MultilayerVertex,&lt;:Union{Nothing,U}}}}</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>    v_metadata_dict<span class="op">::</span><span class="dt">Dict{T,&lt;:Union{&lt;:Tuple,&lt;:NamedTuple}}</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Weight tensor:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">struct</span> WeightTensor{U<span class="op">&lt;:</span><span class="dt">Real</span>} <span class="op">&lt;:</span><span class="dt"> AbstractTensorRepresentation</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>    array<span class="op">::</span><span class="dt">Array{U,4}</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>    layers_names<span class="op">::</span><span class="dt">Vector{Symbol}</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>    idx_N_associations<span class="op">::</span><span class="dt">Bijection{Int64,Node}</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section></section>
+<section>
+<section id="practice-3" class="title-slide slide level1 smaller center">
+<h1><span class="semi-transparent">Practice</span></h1>
+<p><span class="semi-transparent">In this section, we are going to see:</span></p>
+<p><span class="semi-transparent">1. Overview of <code>Graphs.jl</code></span></p>
+<p><span class="semi-transparent">2. Main design features;</span></p>
+<ol start="3" type="1">
+<li><p>Brief showcase:</p>
+<p>3.1 Tutorial;</p>
+<p>3.2 Pretty console prints.</p></li>
+</ol>
+<p><span class="semi-transparent">4. Future developments:</span></p>
+</section>
+<section id="brief-showcase-tutorial" class="slide level2 smaller">
+<h2>Brief showcase: Tutorial</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Import necessary dependencies</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="im">using</span> <span class="bu">Distributions</span>, <span class="bu">Graphs</span>, <span class="bu">SimpleValueGraphs</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="im">using</span> <span class="bu">MultilayerGraphs</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># Set the number of nodes</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="kw">const</span> n_nodes <span class="op">=</span> <span class="fl">100</span> </span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co"># Create a list of nodes</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="kw">const</span> node_list <span class="op">=</span> [<span class="fu">Node</span>(<span class="st">"node_</span><span class="sc">$</span>i<span class="st">"</span>) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n_nodes]</span>
+<span id="cb14-8"><a href="#cb14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="co"># Create a simple directed layer</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a>n_vertices <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">100</span>)                          <span class="co"># Number of vertices </span></span>
+<span id="cb14-11"><a href="#cb14-11"></a>layer_simple_directed <span class="op">=</span> <span class="fu">layer_simpledigraph</span>(      <span class="co"># Layer constructor </span></span>
+<span id="cb14-12"><a href="#cb14-12"></a>    <span class="op">:</span>layer_simple_directed,                       <span class="co"># Layer name</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>    <span class="fu">sample</span>(node_list, n_vertices; replace<span class="op">=</span><span class="cn">false</span>), <span class="co"># Nodes represented in the layer</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a>    <span class="fu">Truncated</span>(<span class="fu">Normal</span>(<span class="fl">5</span>, <span class="fl">5</span>), <span class="fl">0</span>, <span class="fl">20</span>), <span class="co"># Indegree sequence distribution </span></span>
+<span id="cb14-15"><a href="#cb14-15"></a>    <span class="fu">Truncated</span>(<span class="fu">Normal</span>(<span class="fl">5</span>, <span class="fl">5</span>), <span class="fl">0</span>, <span class="fl">20</span>)  <span class="co"># Outdegree sequence distribution</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a>)</span>
+<span id="cb14-17"><a href="#cb14-17"></a></span>
+<span id="cb14-18"><a href="#cb14-18"></a><span class="co"># Create a simple directed weighted layer</span></span>
+<span id="cb14-19"><a href="#cb14-19"></a>n_vertices <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span>n_nodes)                                   <span class="co"># Number of vertices </span></span>
+<span id="cb14-20"><a href="#cb14-20"></a>n_edges <span class="op">=</span> <span class="fu">rand</span>(n_vertices<span class="op">:</span>(n_vertices <span class="op">*</span> (n_vertices <span class="op">-</span> <span class="fl">1</span>) <span class="op">-</span> <span class="fl">1</span>)) <span class="co"># Number of edges </span></span>
+<span id="cb14-21"><a href="#cb14-21"></a>layer_simple_directed_weighted <span class="op">=</span> <span class="fu">layer_simpleweighteddigraph</span>(  <span class="co"># Layer constructor </span></span>
+<span id="cb14-22"><a href="#cb14-22"></a>    <span class="op">:</span>layer_simple_directed_weighted,                           <span class="co"># Layer name</span></span>
+<span id="cb14-23"><a href="#cb14-23"></a>    <span class="fu">sample</span>(node_list, n_vertices; replace<span class="op">=</span><span class="cn">false</span>), <span class="co"># Nodes represented in the layer</span></span>
+<span id="cb14-24"><a href="#cb14-24"></a>    n_edges;                                 <span class="co"># Number of randomly distributed edges</span></span>
+<span id="cb14-25"><a href="#cb14-25"></a>    default_edge_weight<span class="op">=</span>(src, dst) <span class="op">-&gt;</span> <span class="fu">rand</span>() <span class="co"># Function assigning weights to edges </span></span>
+<span id="cb14-26"><a href="#cb14-26"></a>)</span>
+<span id="cb14-27"><a href="#cb14-27"></a></span>
+<span id="cb14-28"><a href="#cb14-28"></a><span class="co"># Create a simple directed value layer</span></span>
+<span id="cb14-29"><a href="#cb14-29"></a>n_vertices <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span>n_nodes)                                   <span class="co"># Number of vertices </span></span>
+<span id="cb14-30"><a href="#cb14-30"></a>n_edges <span class="op">=</span> <span class="fu">rand</span>(n_vertices<span class="op">:</span>(n_vertices <span class="op">*</span> (n_vertices <span class="op">-</span> <span class="fl">1</span>) <span class="op">-</span> <span class="fl">1</span>)) <span class="co"># Number of edges </span></span>
+<span id="cb14-31"><a href="#cb14-31"></a>default_vertex_metadata <span class="op">=</span> v <span class="op">-&gt;</span> (<span class="st">"vertex_</span><span class="sc">$</span>(v)<span class="st">_metadata"</span>,)       <span class="co"># Vertex metadata </span></span>
+<span id="cb14-32"><a href="#cb14-32"></a>default_edge_metadata <span class="op">=</span> (s, d) <span class="op">-&gt;</span> (<span class="fu">rand</span>(),)                    <span class="co"># Edge metadata </span></span>
+<span id="cb14-33"><a href="#cb14-33"></a>layer_simple_directed_value <span class="op">=</span> <span class="fu">Layer</span>(                           <span class="co"># Layer constructor</span></span>
+<span id="cb14-34"><a href="#cb14-34"></a>    <span class="op">:</span>layer_simple_directed_value,                              <span class="co"># Layer name</span></span>
+<span id="cb14-35"><a href="#cb14-35"></a>    <span class="fu">sample</span>(node_list, n_vertices; replace<span class="op">=</span><span class="cn">false</span>), <span class="co"># Nodes represented in the layer</span></span>
+<span id="cb14-36"><a href="#cb14-36"></a>    n_edges,                                      <span class="co"># Number of randomly distributed edges</span></span>
+<span id="cb14-37"><a href="#cb14-37"></a>    <span class="fu">ValDiGraph</span>(                                                </span>
+<span id="cb14-38"><a href="#cb14-38"></a>        <span class="fu">SimpleDiGraph</span><span class="dt">{Int64}</span>(); </span>
+<span id="cb14-39"><a href="#cb14-39"></a>        vertexval_types<span class="op">=</span>(<span class="dt">String</span>,),</span>
+<span id="cb14-40"><a href="#cb14-40"></a>        vertexval_init<span class="op">=</span>default_vertex_metadata,</span>
+<span id="cb14-41"><a href="#cb14-41"></a>        edgeval_types<span class="op">=</span>(<span class="dt">Float64</span>,),</span>
+<span id="cb14-42"><a href="#cb14-42"></a>        edgeval_init<span class="op">=</span>default_edge_metadata,</span>
+<span id="cb14-43"><a href="#cb14-43"></a>    ),</span>
+<span id="cb14-44"><a href="#cb14-44"></a>    <span class="dt">Float64</span>;</span>
+<span id="cb14-45"><a href="#cb14-45"></a>    default_vertex_metadata<span class="op">=</span>default_vertex_metadata, <span class="co"># Vertex metadata </span></span>
+<span id="cb14-46"><a href="#cb14-46"></a>    default_edge_metadata<span class="op">=</span>default_edge_metadata      <span class="co"># Edge metadata </span></span>
+<span id="cb14-47"><a href="#cb14-47"></a>)</span>
+<span id="cb14-48"><a href="#cb14-48"></a></span>
+<span id="cb14-49"><a href="#cb14-49"></a><span class="co"># Create a list of layers </span></span>
+<span id="cb14-50"><a href="#cb14-50"></a>layers <span class="op">=</span> [layer_simple_directed, layer_simple_directed_weighted, layer_simple_directed_value]</span>
+<span id="cb14-51"><a href="#cb14-51"></a></span>
+<span id="cb14-52"><a href="#cb14-52"></a></span>
+<span id="cb14-53"><a href="#cb14-53"></a><span class="co"># Create a simple directed interlayer</span></span>
+<span id="cb14-54"><a href="#cb14-54"></a>n_vertices_1 <span class="op">=</span> <span class="fu">nv</span>(layer_simple_directed)               <span class="co"># Number of vertices of layer 1</span></span>
+<span id="cb14-55"><a href="#cb14-55"></a>n_vertices_2 <span class="op">=</span> <span class="fu">nv</span>(layer_simple_directed_weighted)      <span class="co"># Number of vertices of layer 2</span></span>
+<span id="cb14-56"><a href="#cb14-56"></a>n_edges <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span>(n_vertices_1 <span class="op">*</span> n_vertices_2 <span class="op">-</span> <span class="fl">1</span>))    <span class="co"># Number of interlayer edges </span></span>
+<span id="cb14-57"><a href="#cb14-57"></a>interlayer_simple_directed <span class="op">=</span> <span class="fu">interlayer_simpledigraph</span>( <span class="co"># Interlayer constructor </span></span>
+<span id="cb14-58"><a href="#cb14-58"></a>    layer_simple_directed,                             <span class="co"># Layer 1 </span></span>
+<span id="cb14-59"><a href="#cb14-59"></a>    layer_simple_directed_weighted,                    <span class="co"># Layer 2 </span></span>
+<span id="cb14-60"><a href="#cb14-60"></a>    n_edges                                            <span class="co"># Number of edges </span></span>
+<span id="cb14-61"><a href="#cb14-61"></a>)</span>
+<span id="cb14-62"><a href="#cb14-62"></a></span>
+<span id="cb14-63"><a href="#cb14-63"></a><span class="co"># Create a simple directed meta interlayer </span></span>
+<span id="cb14-64"><a href="#cb14-64"></a>n_vertices_1 <span class="op">=</span> <span class="fu">nv</span>(layer_simple_directed_weighted)   <span class="co"># Number of vertices of layer 1</span></span>
+<span id="cb14-65"><a href="#cb14-65"></a>n_vertices_2 <span class="op">=</span> <span class="fu">nv</span>(layer_simple_directed_value)      <span class="co"># Number of vertices of layer 2</span></span>
+<span id="cb14-66"><a href="#cb14-66"></a>n_edges <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span>(n_vertices_1 <span class="op">*</span> n_vertices_2 <span class="op">-</span> <span class="fl">1</span>)) <span class="co"># Number of interlayer edges </span></span>
+<span id="cb14-67"><a href="#cb14-67"></a>interlayer_simple_directed_meta <span class="op">=</span> <span class="fu">interlayer_metadigraph</span>( <span class="co"># Interlayer constructor</span></span>
+<span id="cb14-68"><a href="#cb14-68"></a>    layer_simple_directed_weighted,                       <span class="co"># Layer 1 </span></span>
+<span id="cb14-69"><a href="#cb14-69"></a>    layer_simple_directed_value,                          <span class="co"># Layer 2</span></span>
+<span id="cb14-70"><a href="#cb14-70"></a>    n_edges;                                              <span class="co"># Number of edges</span></span>
+<span id="cb14-71"><a href="#cb14-71"></a>    default_edge_metadata<span class="op">=</span>(src, dst) <span class="op">-&gt;</span>                   <span class="co"># Edge metadata </span></span>
+<span id="cb14-72"><a href="#cb14-72"></a>        (edge_metadata<span class="op">=</span><span class="st">"metadata_of_edge_from_</span><span class="sc">$</span>(src)<span class="st">_to_</span><span class="sc">$</span>(dst)<span class="st">"</span>,),</span>
+<span id="cb14-73"><a href="#cb14-73"></a>    transfer_vertex_metadata<span class="op">=</span><span class="cn">true</span> <span class="co"># Boolean deciding layer vertex metadata inheritance</span></span>
+<span id="cb14-74"><a href="#cb14-74"></a>)</span>
+<span id="cb14-75"><a href="#cb14-75"></a></span>
+<span id="cb14-76"><a href="#cb14-76"></a><span class="co"># Create a list of interlayers </span></span>
+<span id="cb14-77"><a href="#cb14-77"></a>interlayers <span class="op">=</span> [interlayer_simple_directed, interlayer_simple_directed_meta]</span>
+<span id="cb14-78"><a href="#cb14-78"></a></span>
+<span id="cb14-79"><a href="#cb14-79"></a><span class="co"># Of course all methods such as add/rem_vertex!, add/rem_edge! work as expected on Layers and Interlayers</span></span>
+<span id="cb14-80"><a href="#cb14-80"></a></span>
+<span id="cb14-81"><a href="#cb14-81"></a><span class="co"># Create a simple directed multilayer graph</span></span>
+<span id="cb14-82"><a href="#cb14-82"></a>multilayerdigraph <span class="op">=</span> <span class="fu">MultilayerDiGraph</span>( <span class="co"># Constructor </span></span>
+<span id="cb14-83"><a href="#cb14-83"></a>    layers,                     <span class="co"># The (ordered) collection of layers</span></span>
+<span id="cb14-84"><a href="#cb14-84"></a>    interlayers;                <span class="co"># The manually specified interlayers</span></span>
+<span id="cb14-85"><a href="#cb14-85"></a>                                <span class="co"># The interlayers that are left unspecified </span></span>
+<span id="cb14-86"><a href="#cb14-86"></a>                                <span class="co"># will be automatically inserted according </span></span>
+<span id="cb14-87"><a href="#cb14-87"></a>                                <span class="co"># to the keyword argument below</span></span>
+<span id="cb14-88"><a href="#cb14-88"></a>    default_interlayers_structure<span class="op">=</span><span class="st">"multiplex"</span> </span>
+<span id="cb14-89"><a href="#cb14-89"></a>    <span class="co"># The automatically specified interlayers will have only diagonal couplings</span></span>
+<span id="cb14-90"><a href="#cb14-90"></a>)</span>
+<span id="cb14-91"><a href="#cb14-91"></a></span>
+<span id="cb14-92"><a href="#cb14-92"></a><span class="co"># Layers and interlayer can be accessed as properties using their names</span></span>
+<span id="cb14-93"><a href="#cb14-93"></a>multilayerdigraph.layer_simple_directed_value</span>
+<span id="cb14-94"><a href="#cb14-94"></a>multilayerdigraph.interlayer_layer_simple_directed_layer_simple_directed_weighted <span class="co"># Name is complicated since it was automatically assigned. Whole interlayers chan be automatically specified.</span></span>
+<span id="cb14-95"><a href="#cb14-95"></a></span>
+<span id="cb14-96"><a href="#cb14-96"></a><span class="co"># Create a node </span></span>
+<span id="cb14-97"><a href="#cb14-97"></a>new_node_1 <span class="op">=</span> <span class="fu">Node</span>(<span class="st">"new_node_1"</span>)</span>
+<span id="cb14-98"><a href="#cb14-98"></a><span class="co"># Add the node to the multilayer graph </span></span>
+<span id="cb14-99"><a href="#cb14-99"></a><span class="fu">add_node!</span>(multilayerdigraph, new_node_1)</span>
+<span id="cb14-100"><a href="#cb14-100"></a><span class="co"># Create a vertex representing the node </span></span>
+<span id="cb14-101"><a href="#cb14-101"></a>new_vertex_1 <span class="op">=</span> <span class="fu">MV</span>(                <span class="co"># Constructor (alias for "MultilayerVertex")</span></span>
+<span id="cb14-102"><a href="#cb14-102"></a>    new_node_1,                   <span class="co"># Node represented by the vertex</span></span>
+<span id="cb14-103"><a href="#cb14-103"></a>    <span class="op">:</span>layer_simple_directed_value, <span class="co"># Layer containing the vertex </span></span>
+<span id="cb14-104"><a href="#cb14-104"></a>    (<span class="st">"new_metadata"</span>,)             <span class="co"># Vertex metadata </span></span>
+<span id="cb14-105"><a href="#cb14-105"></a>)</span>
+<span id="cb14-106"><a href="#cb14-106"></a><span class="co"># Add the vertex </span></span>
+<span id="cb14-107"><a href="#cb14-107"></a><span class="fu">add_vertex!</span>(</span>
+<span id="cb14-108"><a href="#cb14-108"></a>    multilayerdigraph, <span class="co"># MultilayerDiGraph the vertex will be added to</span></span>
+<span id="cb14-109"><a href="#cb14-109"></a>    new_vertex_1       <span class="co"># MultilayerVertex to add</span></span>
+<span id="cb14-110"><a href="#cb14-110"></a>)</span>
+<span id="cb14-111"><a href="#cb14-111"></a></span>
+<span id="cb14-112"><a href="#cb14-112"></a><span class="co"># Create another node in another layer </span></span>
+<span id="cb14-113"><a href="#cb14-113"></a>new_node_2 <span class="op">=</span> <span class="fu">Node</span>(<span class="st">"new_node_2"</span>)</span>
+<span id="cb14-114"><a href="#cb14-114"></a><span class="co"># Create another vertex representing the new node</span></span>
+<span id="cb14-115"><a href="#cb14-115"></a>new_vertex_2 <span class="op">=</span> <span class="fu">MV</span>(new_node_2, <span class="op">:</span>layer_simple_directed_value)</span>
+<span id="cb14-116"><a href="#cb14-116"></a><span class="co"># Add the new vertex</span></span>
+<span id="cb14-117"><a href="#cb14-117"></a><span class="fu">add_vertex!</span>(</span>
+<span id="cb14-118"><a href="#cb14-118"></a>    multilayerdigraph,</span>
+<span id="cb14-119"><a href="#cb14-119"></a>    new_vertex_2;</span>
+<span id="cb14-120"><a href="#cb14-120"></a>    add_node<span class="op">=</span><span class="cn">true</span> <span class="co"># Add the associated node before adding the vertex</span></span>
+<span id="cb14-121"><a href="#cb14-121"></a>)</span>
+<span id="cb14-122"><a href="#cb14-122"></a><span class="co"># Create an edge </span></span>
+<span id="cb14-123"><a href="#cb14-123"></a>new_edge <span class="op">=</span> <span class="fu">MultilayerEdge</span>(  <span class="co"># Constructor </span></span>
+<span id="cb14-124"><a href="#cb14-124"></a>    new_vertex_1,           <span class="co"># Source vertex</span></span>
+<span id="cb14-125"><a href="#cb14-125"></a>    new_vertex_2,           <span class="co"># Destination vertex </span></span>
+<span id="cb14-126"><a href="#cb14-126"></a>    (<span class="st">"some_edge_metadata"</span>,) <span class="co"># Edge metadata </span></span>
+<span id="cb14-127"><a href="#cb14-127"></a>)</span>
+<span id="cb14-128"><a href="#cb14-128"></a><span class="co"># Add the edge </span></span>
+<span id="cb14-129"><a href="#cb14-129"></a><span class="fu">add_edge!</span>(</span>
+<span id="cb14-130"><a href="#cb14-130"></a>    multilayerdigraph, <span class="co"># MultilayerDiGraph the edge will be added to</span></span>
+<span id="cb14-131"><a href="#cb14-131"></a>    new_edge           <span class="co"># MultilayerVertex to add</span></span>
+<span id="cb14-132"><a href="#cb14-132"></a>)</span>
+<span id="cb14-133"><a href="#cb14-133"></a></span>
+<span id="cb14-134"><a href="#cb14-134"></a><span class="co"># Compute the global clustering coefficient</span></span>
+<span id="cb14-135"><a href="#cb14-135"></a><span class="fu">multilayer_global_clustering_coefficient</span>(multilayerdigraph) </span>
+<span id="cb14-136"><a href="#cb14-136"></a><span class="co"># Compute the overlay clustering coefficient</span></span>
+<span id="cb14-137"><a href="#cb14-137"></a><span class="fu">overlay_clustering_coefficient</span>(multilayerdigraph)</span>
+<span id="cb14-138"><a href="#cb14-138"></a><span class="co"># Compute the multilayer eigenvector centrality </span></span>
+<span id="cb14-139"><a href="#cb14-139"></a><span class="fu">eigenvector_centrality</span>(multilayerdigraph)</span>
+<span id="cb14-140"><a href="#cb14-140"></a><span class="co"># Compute the multilayer modularity </span></span>
+<span id="cb14-141"><a href="#cb14-141"></a><span class="fu">modularity</span>(</span>
+<span id="cb14-142"><a href="#cb14-142"></a>    multilayerdigraph,</span>
+<span id="cb14-143"><a href="#cb14-143"></a>    <span class="fu">rand</span>([<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>], <span class="fu">length</span>(<span class="fu">nodes</span>(multilayerdigraph)), <span class="fu">length</span>(multilayerdigraph.layers))</span>
+<span id="cb14-144"><a href="#cb14-144"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="brief-showcase-pretty-console-prints" class="slide level2 scrollable">
+<h2>Brief showcase: Pretty console prints</h2>
+<p><img data-src="images/practice/multilayerdigraph_console_print.png" class="absolute" style="height: 70%; "></p>
+</section></section>
+<section>
+<section id="practice-4" class="title-slide slide level1 smaller center">
+<h1><span class="semi-transparent">Practice</span></h1>
+<p><span class="semi-transparent">In this section, we are going to see:</span></p>
+<p><span class="semi-transparent">1. Overview of <code>Graphs.jl</code></span></p>
+<p><span class="semi-transparent">2. Main design features;</span></p>
+<p><span class="semi-transparent">3. Brief showcase.</span></p>
+<ol start="4" type="1">
+<li><p>Future developments:</p>
+<p>4.1 Systematize the sub-ecosystem interface;</p>
+<p>4.2 Implement dimensions of multiplexity (aspects);</p>
+<p>4.3 Implement more graph algorithms;</p>
+<p>4.4 Implement more functionalities.</p></li>
+</ol>
+</section>
+<section id="future-developments-systematize-the-sub-ecosystem-interface" class="slide level2">
+<h2>Future developments: Systematize the sub-ecosystem interface</h2>
+<p>Desiderata:</p>
+<ol type="1">
+<li>Agree on a set of APIs the external contributor should implement, and allow this to happen by restructuring the code;</li>
+</ol>
+<div class="fragment">
+<ol start="2" type="1">
+<li>Systematize the matter in a dedicated section of the documentation.</li>
+</ol>
+</div>
+</section>
+<section id="future-developments-implement-dimensions-of-multiplexity-aspects" class="slide level2 smaller">
+<h2>Future developments: Implement dimensions of multiplexity (aspects)</h2>
+<p>Most urgent contribution:</p>
+<ul>
+<li>Allow to have more <code>Layer</code>s on the same <strong>dimension of multiplicity</strong>;</li>
+</ul>
+<p>Some related technical ToDos are:</p>
+<ol type="1">
+<li>Transition from a <code>Vector{Layer}</code> to an <code>OrderedDict{String, Vector{Layer}}</code> to store Layer (descriptors) inside the multilayer graph;</li>
+<li>Implement an <code>add_aspect!</code> function;</li>
+<li>Modify <code>add_layer!</code> so that it also requires the <code>aspect</code> the <code>Layer</code> should be assigned to;</li>
+<li>Implications on representations?</li>
+</ol>
+</section>
+<section id="future-developments-implement-more-graph-algorithms" class="slide level2 smaller">
+<h2>Future developments: Implement more graph algorithms</h2>
+<p>See issues:</p>
+<ul>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/94">Implement multilayer community detection algorithms</a>;</li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/93">Implement components</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/92">Implement coverage evolution</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/91">Implement Laplacian matrix</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/90">Implement global descriptors</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/89">Implement the multiplexity centrality</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/87">Implement multilayer Page Rank centrality</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/86">Implement multilayer Katz centrality</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/85">Implement multilayer hub centrality</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/84">Implement multilayer closeness centrality</a></li>
+</ul>
+</section>
+<section id="future-developments-implement-more-functionalities" class="slide level2 smaller">
+<h2>Future developments: Implement more functionalities</h2>
+<p>See issues:</p>
+<ul>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/82">Add IO functionality to import / export multilayer network data in various formats</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/63">Add to add_layer! a kwarg that allows the user to specify some new interlayers, skipping the instantiation of the default ones. enhancement</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/62">Allow configuration models to specify a minimum discrepancy between the sampled (di)graphical sequence(s) and the provided distribution</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/61">Improve integration with Agents.jl</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/54">Implement multilayer graph data visualisation functionalities (or a new package)</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/48">Implement a fully-fledged multilayer configuration model / graph generator</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/46">Implement configuration models / graph generators for interlayers</a></li>
+<li><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/35">Implement projected monoplex and overlay graphs</a></li>
+</ul>
+</section></section>
+<section>
+<section id="thanks" class="title-slide slide level1 center">
+<h1>Thanks <span class="emoji" data-emoji="pray">🙏</span></h1>
+
+</section>
+<section class="slide level2">
+
+<h3 id="outline-1">Outline</h3>
+<p><span class="emoji" data-emoji="one">1️⃣</span> <a href="#/Theory">Theory</a></p>
+<p><span class="emoji" data-emoji="two">2️⃣</span> <a href="#/Applications">Applications</a></p>
+<p><span class="emoji" data-emoji="three">3️⃣</span> <a href="#/Practice">Practice</a></p>
+<h3 id="resources-1">Resources</h3>
+<p><img data-src="images/logo/GitHub.svg" class="absolute" style="left: 0px; bottom: 302px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl">Repository</a></p>
+<p><img data-src="images/logo/JOSS.png" class="absolute" style="left: 0px; bottom: 237px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://doi.org/10.21105/joss.05116">Paper</a></p>
+<p><img data-src="images/logo/JuliaDots.svg" class="absolute" style="left: 0px; bottom: 176px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://juliagraphs.org/MultilayerGraphs.jl">Documentation</a></p>
+<p><img data-src="images/logo/Discourse.png" class="absolute" style="left: 0px; bottom: 113px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Post (<a href="https://discourse.julialang.org/t/ann-multilayergraphs-jl-a-package-to-construct-handle-and-analyse-multilayer-graphs/85988">v0.1</a>, <a href="https://discourse.julialang.org/t/ann-multilayergraphs-jl-v1-1-multilayer-network-science-in-julia/92680">v1.1</a>)</p>
+<p><img data-src="images/logo/Twitter.png" class="absolute" style="left: 0px; bottom: 51px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread (<a href="https://twitter.com/In_Phy_T/status/1560594513189638146">v0.1</a>, <a href="https://twitter.com/In_Phy_T/status/1612460371939581955">v1.1</a>)</p>
+<p><img data-src="images/logo/MultilayerGraphs.png" class="absolute" style="bottom: 190px; right: 0px; width: 40%; "></p>
+<p><img src="images/logo/JuliaCon.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl">MultilayerGraphs.jl: Multilayer Network Science in Julia</a></p>
+</div>
+</section></section>
     </div>
   </div>
 

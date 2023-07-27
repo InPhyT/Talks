@@ -29,6 +29,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
   <link rel="stylesheet" href="styles.css">
@@ -352,13 +417,385 @@
 
   <p class="date">2023-07-27</p>
 </section>
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="clapper">🎬</span> Introduction</h1>
+
+</section>
 <section class="slide level2">
 
+<h3 id="outline">Outline</h3>
+<p><span class="emoji" data-emoji="one">1️⃣</span> <a href="#/Theory">Theory</a></p>
+<p><span class="emoji" data-emoji="two">2️⃣</span> <a href="#/Applications">Applications</a></p>
+<p><span class="emoji" data-emoji="three">3️⃣</span> <a href="#/Practice">Practice</a></p>
+<h3 id="resources">Resources</h3>
+<p><img data-src="images/logo/GitHub.svg" class="absolute" style="left: 0px; bottom: 302px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl">Repository</a></p>
+<p><img data-src="images/logo/JOSS.png" class="absolute" style="left: 0px; bottom: 237px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://doi.org/10.21105/joss.05116">Paper</a></p>
+<p><img data-src="images/logo/JuliaDots.svg" class="absolute" style="left: 0px; bottom: 176px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://juliagraphs.org/MultilayerGraphs.jl/dev">Documentation</a></p>
+<p><img data-src="images/logo/Discourse.png" class="absolute" style="left: 0px; bottom: 113px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Post (<a href="https://discourse.julialang.org/t/ann-multilayergraphs-jl-a-package-to-construct-handle-and-analyse-multilayer-graphs/85988">v0.1</a>, <a href="https://discourse.julialang.org/t/ann-multilayergraphs-jl-v1-1-multilayer-network-science-in-julia/92680">v1.1</a>)</p>
+<p><img data-src="images/logo/Twitter.png" class="absolute" style="left: 0px; bottom: 51px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread (<a href="https://twitter.com/In_Phy_T/status/1560594513189638146">v0.1</a>, <a href="https://twitter.com/In_Phy_T/status/1612460371939581955">v1.1</a>)</p>
+<p><img data-src="images/logo/MultilayerGraphs.png" class="absolute" style="bottom: 190px; right: 0px; width: 40%; "></p>
+</section></section>
+<section>
+<section id="theory" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="notebook">📓</span> Theory</h1>
 
-<img src="images/logo/JuliaCon.png" class="slide-logo r-stretch"><div class="footer footer-default">
-<p><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl">MultilayerGraphs.jl: Multilayer Network Science in Julia</a></p>
+</section>
+<section id="conceptual-framework" class="slide level2 smaller">
+<h2>Conceptual Framework</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Network</li>
+<li>Graph</li>
+<li>Vertex (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerVertex"><code>MultilayerVertex</code></a>)</li>
+<li>Node (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.Node"><code>Node</code></a>)</li>
+<li>Layer (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.Layer"><code>Layer</code></a>)</li>
+<li>Intra-layer edge (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerEdge"><code>MultilayerEdge</code></a>)</li>
+<li>Inter-layer edge (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerEdge"><code>MultilayerEdge</code></a>)</li>
+<li>Interlayer (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.Interlayer"><code>Interlayer</code></a>)</li>
+<li>Multilayer (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerGraph"><code>MultilayerGraph</code></a>)</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/books/basics.png" class="absolute" style="bottom: 50px; right: -250px; width: 75%; "></p>
+</div>
+</div>
+
+<aside><div>
+<p>Figure from <a href="https://doi.org/10.1007/978-3-030-75718-2">De Domenico (2022)</a>.</p>
+</div></aside></section>
+<section id="conceptual-framework-1" class="slide level2 smaller">
+<h2>Conceptual Framework</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<h4 id="intra-layer-interactions">Intra-layer Interactions</h4>
+<ul>
+<li>Self</li>
+<li>Endogenous</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<h4 id="inter-layer-interactions">Inter-layer interactions</h4>
+<ul>
+<li>Exogenous</li>
+<li>Intertwining</li>
+</ul>
+</div>
+</div>
+<p><img data-src="images/books/taxonomy.png" class="absolute" style="bottom: 80px; right: 120px; width: 80%; "></p>
+
+<aside><div>
+<p>Figure from <a href="https://doi.org/10.1007/978-3-030-75718-2">De Domenico (2022)</a>.</p>
+</div></aside></section>
+<section id="mathematical-framework" class="slide level2 smaller">
+<h2>Mathematical Framework</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<h4 id="mono-layer-adjacency-tensor-weighttensor">Mono-Layer Adjacency Tensor (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.WeightTensor"><code>WeightTensor</code></a>)</h4>
+<p><span class="math display">\[\begin{align*}
+W_j^i&amp;=\sum_{a, b=1}^N w_{a b} e^i(a) e_j(b)=\sum_{a, b=1}^N w_{a b} E_j^i(a b)
+\end{align*}\]</span></p>
+<h4 id="multi-layer-adjacency-tensor-weighttensor">Multi-Layer Adjacency Tensor (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.WeightTensor"><code>WeightTensor</code></a>)</h4>
+<p><span class="math display">\[\begin{align*}
+M_{j \beta}^{i \alpha}&amp;=\sum_{a, b=1}^N \sum_{p, q=1}^L w_{a b}(p q) e^i(a) e_j(b) e^\alpha(p) e_\beta(q) \\
+&amp;=\underbrace{m_{i \alpha}^{j \beta} \delta_\alpha^\beta \delta_i^j+m_{i \alpha}^{j \beta} \delta_\alpha^\beta\left(1-\delta_i^j\right)}_{\text {intra-layer}}+\underbrace{m_{i \alpha}^{j \beta}\left(1-\delta_\alpha^\beta\right) \delta_i^j+m_{i \alpha}^{j \beta}\left(1-\delta_\alpha^\beta\right)\left(1-\delta_i^j\right)}_{\text {inter-layer}} \\
+&amp;=\underbrace{m_{i \alpha}^{i \alpha}}_{\text {self}}+\underbrace{m_{i \alpha}^{j \alpha}}_{\text {endogenous}}+\underbrace{m_{i \alpha}^{j \beta}}_{\text {exogenous}}+\underbrace{m_{i \alpha}^{i \beta}}_{\text {intertwining}}
+\end{align*}\]</span></p>
+</div><div class="column" style="width:50%;">
+
+</div>
 </div>
 </section>
+<section id="mathematical-framework-1" class="slide level2 smaller">
+<h2>Mathematical Framework</h2>
+<h4 id="supra-adjacency-matrix-supraweightmatrix">Supra-Adjacency Matrix (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.SupraWeightMatrix"><code>SupraWeightMatrix</code></a>)</h4>
+<p><img data-src="images/books/supra-adjacency-matrix.png" class="absolute" style="bottom: 120px; right: 100px; width: 85%; "></p>
+
+<aside><div>
+<p>Figure from <a href="https://doi.org/10.1007/978-3-030-75718-2">De Domenico (2022)</a>.</p>
+</div></aside></section>
+<section id="mathematical-framework-2" class="slide level2 smaller">
+<h2>Mathematical Framework</h2>
+<h3 id="metrics">Metrics</h3>
+<h4 id="degree-centrality-degree">Degree Centrality (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#Graphs.degree-Union%7BTuple%7BV%7D,%20Tuple%7BM%7D,%20Tuple%7BType%7BIsDirected%7BM%7D%7D,%20M,%20V%7D%7D%20where%20%7BM%3C:AbstractMultilayerGraph,%20V%3C:MultilayerVertex%7D"><code>degree</code></a>)</h4>
+<p><span class="math inline">\(k_i=\sum_{\alpha, \beta=1}^L \sum_{j=1}^N M_{j \beta}^{i \alpha}=M_{j \beta}^{i \alpha} u_\alpha^\beta u^j\)</span></p>
+<h4 id="eigenvector-centrality-eigenvector_centrality">Eigenvector Centrality (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#Graphs.eigenvector_centrality-Union%7BTuple%7BM%7D,%20Tuple%7BU%7D,%20Tuple%7BT%7D%7D%20where%20%7BT,%20U,%20M%3C:AbstractMultilayerGraph%7BT,%20U%7D%7D"><code>eigenvector_centrality</code></a>)</h4>
+<p><span class="math inline">\(\sum_{i, \alpha} M_{j \beta}^{i \alpha} \Theta_{i \alpha}=\lambda_1 \Theta_{j \beta}\)</span></p>
+<h4 id="modularity-modularity">Modularity (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#Graphs.modularity-Union%7BTuple%7BM%7D,%20Tuple%7BU%7D,%20Tuple%7BT%7D,%20Tuple%7BM,%20Matrix%7BInt64%7D%7D%7D%20where%20%7BT,%20U,%20M%3C:AbstractMultilayerGraph%7BT,%20U%7D%7D"><code>modularity</code></a>)</h4>
+<p><span class="math inline">\(Q=\frac{1}{\mathcal{K}} S_{\alpha \tilde{\rho}}^a B_{\beta \tilde{\sigma}}^{\alpha \tilde{\rho}} S_a^{\beta \tilde{\sigma}}\)</span></p>
+<h4 id="von-neumann-entropy-von_neumann_entropy">Von Neumann Entropy (<a href="https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.von_neumann_entropy-Union%7BTuple%7BM%7D,%20Tuple%7BU%7D,%20Tuple%7BT%7D,%20Tuple%7BType%7BNot%7BIsDirected%7BM%7D%7D%7D,%20M%7D%7D%20where%20%7BT,%20U,%20M%3C:AbstractMultilayerGraph%7BT,%20U%7D%7D"><code>von_neumann_entropy</code></a>)</h4>
+<p><span class="math inline">\(\mathcal{H}(M)=-\Lambda_{\beta \tilde{\delta}}^{\alpha \tilde{\gamma}} \log _2\left[\Lambda_{\alpha \tilde{\gamma}}^{\beta \tilde{\delta}}\right]\)</span></p>
+</section></section>
+<section>
+<section id="applications" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="microscope">🔬</span> Applications</h1>
+
+</section>
+<section id="multilayer-network-epidemiology" class="slide level2 smaller">
+<h2>Multilayer Network Epidemiology</h2>
+<p><img data-src="images/articles/Aleta2020-model.webp" class="absolute" style="top: 120px; left: 0px; width: 50%; "> <img data-src="images/articles/Aleta2022.jpeg" class="absolute" style="top: 120px; right: -100px; width: 50%; "></p>
+
+<aside><div>
+<p>Figures from <a href="https://doi.org/10.1038/s41562-020-0931-9">Aleta et al.&nbsp;(2020)</a> and <a href="https://doi.org/10.1073/pnas.2112182119">Aleta et al.&nbsp;(2022)</a>.</p>
+</div></aside></section></section>
+<section>
+<section id="future-developments" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="dart">🎯</span> Future Developments</h1>
+
+</section>
+<section id="future-developments-1" class="slide level2 smaller">
+<h2>Future Developments</h2>
+<ul>
+<li>Import/export</li>
+<li>Data visualisation</li>
+<li>Coverage evolution (e.g.&nbsp;see <a href="https://doi.org/10.1073/pnas.1318469111">De Domenico (2014)</a>)</li>
+<li>Community detection algorithms (e.g.&nbsp;see <a href="https://doi.org/10.1103/PhysRevX.5.011027">De Domenico et al.&nbsp;(2015)</a>)</li>
+<li>Laplacian matrix</li>
+<li>Components (e.g.&nbsp;connected, giant connected, giant intersection, giant viable)</li>
+<li>Multiplexity dimensions (“aspects”)</li>
+<li>Global descriptors (e.g.&nbsp;see <a href="https://doi.org/10.1103/PhysRevX.3.041022">De Domenico (2013)</a>);</li>
+<li>More multilayer centralities / versatilities (e.g.&nbsp;see <a href="https://doi.org/10.1038/ncomms7868">De Domenico et al.&nbsp;(2015)</a>);</li>
+<li>…</li>
+</ul>
+<p>For further information see the related <a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues">issues</a>.</p>
+</section></section>
+<section>
+<section id="references" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="books">📚</span> References</h1>
+
+</section>
+<section id="theory-1" class="slide level2 smaller">
+<h2>Theory</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ol type="1">
+<li><a href="https://doi.org/10.1103/PhysRevX.3.041022">De Domenico et al.&nbsp;(2013)</a></li>
+<li><a href="https://doi.org/10.1093/comnet/cnu016">Kivelä et al.&nbsp;(2014)</a></li>
+<li><a href="https://doi.org/10.1016/j.physrep.2014.07.001">Boccaletti et al.&nbsp;(2014)</a></li>
+<li><a href="https://doi.org/10.1140/epjb/e2015-50742-1">Lee et al.&nbsp;(2015)</a></li>
+<li><a href="https://global.oup.com/academic/product/multilayer-networks-9780192865540">Bianconi (2018)</a></li>
+<li><a href="https://doi.org/10.1007/978-3-319-92255-3">Cozzo et al.&nbsp;(2018)</a></li>
+<li><a href="https://doi.org/10.1146/annurev-conmatphys-031218-013259">Aleta and Moreno (2019)</a></li>
+<li><a href="https://doi.org/10.1017/9781009085809">Artime et al.&nbsp;(2022)</a></li>
+<li><a href="https://doi.org/10.1007/978-3-030-75718-2">De Domenico (2022)</a></li>
+</ol>
+</div><div class="column" style="width:60%;">
+<p><img data-src="images/books/Bianconi2018.png" class="absolute" style="top: -25px; right: 300px; width: 23%; "> <img data-src="images/books/Artime2022.png" class="absolute" style="bottom: 0px; right: 300px; width: 23%; "> <img data-src="images/books/DeDomenico2022.webp" class="absolute" style="bottom: 170px; right: 0px; width: 27%; "></p>
+</div>
+</div>
+</section>
+<section id="applications-1" class="slide level2 smaller">
+<h2>Applications</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ol type="1">
+<li><a href="https://doi.org/10.1103/physreve.88.050801">Cozzo et al.&nbsp;(2013)</a></li>
+<li><a href="https://doi.org/10.1103/physrevlett.111.128701">Granell et al.&nbsp;(2013)</a></li>
+<li><a href="https://doi.org/10.1103/physreve.90.052817">Massaro and Bagnoli (2014)</a></li>
+<li><a href="https://doi.org/10.1103/physreve.89.042819">Estrada and Gomez-Gardenes (2014)</a></li>
+<li><a href="https://doi.org/10.1038/nphys3865">De Domenico et al.&nbsp;(2016)</a></li>
+<li><a href="https://doi.org/10.1038/s41598-017-06933-2">Amato et al.&nbsp;(2017)</a></li>
+<li><a href="https://doi.org/10.1093/gigascience/gix004">De Domenico (2017)</a></li>
+<li><a href="https://doi.org/10.1038/s41559-017-0101">Pilosof et al.&nbsp;(2017)</a></li>
+<li><a href="https://doi.org/10.1038/s41598-019-39243-w">Lim et al.&nbsp;(2019)</a></li>
+<li><a href="https://doi.org/10.1109/tnse.2018.2871726">Mangioni et al.&nbsp;(2020)</a></li>
+<li><a href="https://doi.org/10.1038/s41562-020-0931-9">Aleta et al.&nbsp;(2020)</a></li>
+<li><a href="https://doi.org/10.1073/pnas.2112182119">Aleta et al.&nbsp;(2022)</a></li>
+</ol>
+</div><div class="column" style="width:50%;">
+<p><img data-src="images/articles/Pilosof2017.webp" class="absolute" style="bottom: 10px; right: 30px; width: 40%; "></p>
+</div>
+</div>
+</section></section>
+<section>
+<section id="practice" class="title-slide slide level1 center">
+<h1><span class="emoji" data-emoji="computer">💻</span> Practice</h1>
+<!-- https://github.com/quarto-dev/quarto-cli/discussions/4572 -->
+<style>
+.semi-transparent {
+  opacity: 0.3;
+}
+</style>
+
+<style>
+.center-y {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+</style>
+</section>
+<section id="tutorial" class="slide level2 smaller">
+<h2>Tutorial</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Import necessary dependencies</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">using</span> <span class="bu">Distributions</span>, <span class="bu">Graphs</span>, <span class="bu">SimpleValueGraphs</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">using</span> <span class="bu">MultilayerGraphs</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Set the number of nodes</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">const</span> n_nodes <span class="op">=</span> <span class="fl">100</span> </span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># Create a list of nodes</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">const</span> node_list <span class="op">=</span> [<span class="fu">Node</span>(<span class="st">"node_</span><span class="sc">$</span>i<span class="st">"</span>) for i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n_nodes]</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># Create a simple directed layer</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>n_vertices <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">100</span>)                          <span class="co"># Number of vertices </span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>layer_simple_directed <span class="op">=</span> <span class="fu">layer_simpledigraph</span>(      <span class="co"># Layer constructor </span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="op">:</span>layer_simple_directed,                       <span class="co"># Layer name</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="fu">sample</span>(node_list, n_vertices; replace<span class="op">=</span><span class="cn">false</span>), <span class="co"># Nodes represented in the layer</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>    <span class="fu">Truncated</span>(<span class="fu">Normal</span>(<span class="fl">5</span>, <span class="fl">5</span>), <span class="fl">0</span>, <span class="fl">20</span>), <span class="co"># Indegree sequence distribution </span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>    <span class="fu">Truncated</span>(<span class="fu">Normal</span>(<span class="fl">5</span>, <span class="fl">5</span>), <span class="fl">0</span>, <span class="fl">20</span>)  <span class="co"># Outdegree sequence distribution</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>)</span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="co"># Create a simple directed weighted layer</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>n_vertices <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span>n_nodes)                                   <span class="co"># Number of vertices </span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>n_edges <span class="op">=</span> <span class="fu">rand</span>(n_vertices<span class="op">:</span>(n_vertices <span class="op">*</span> (n_vertices <span class="op">-</span> <span class="fl">1</span>) <span class="op">-</span> <span class="fl">1</span>)) <span class="co"># Number of edges </span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>layer_simple_directed_weighted <span class="op">=</span> <span class="fu">layer_simpleweighteddigraph</span>(  <span class="co"># Layer constructor </span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>    <span class="op">:</span>layer_simple_directed_weighted,                           <span class="co"># Layer name</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>    <span class="fu">sample</span>(node_list, n_vertices; replace<span class="op">=</span><span class="cn">false</span>), <span class="co"># Nodes represented in the layer</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>    n_edges;                                 <span class="co"># Number of randomly distributed edges</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>    default_edge_weight<span class="op">=</span>(src, dst) <span class="op">-&gt;</span> <span class="fu">rand</span>() <span class="co"># Function assigning weights to edges </span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>)</span>
+<span id="cb1-27"><a href="#cb1-27"></a></span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="co"># Create a simple directed value layer</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>n_vertices <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span>n_nodes)                                   <span class="co"># Number of vertices </span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>n_edges <span class="op">=</span> <span class="fu">rand</span>(n_vertices<span class="op">:</span>(n_vertices <span class="op">*</span> (n_vertices <span class="op">-</span> <span class="fl">1</span>) <span class="op">-</span> <span class="fl">1</span>)) <span class="co"># Number of edges </span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>default_vertex_metadata <span class="op">=</span> v <span class="op">-&gt;</span> (<span class="st">"vertex_</span><span class="sc">$</span>(v)<span class="st">_metadata"</span>,)       <span class="co"># Vertex metadata </span></span>
+<span id="cb1-32"><a href="#cb1-32"></a>default_edge_metadata <span class="op">=</span> (s, d) <span class="op">-&gt;</span> (<span class="fu">rand</span>(),)                    <span class="co"># Edge metadata </span></span>
+<span id="cb1-33"><a href="#cb1-33"></a>layer_simple_directed_value <span class="op">=</span> <span class="fu">Layer</span>(                           <span class="co"># Layer constructor</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a>    <span class="op">:</span>layer_simple_directed_value,                              <span class="co"># Layer name</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a>    <span class="fu">sample</span>(node_list, n_vertices; replace<span class="op">=</span><span class="cn">false</span>), <span class="co"># Nodes represented in the layer</span></span>
+<span id="cb1-36"><a href="#cb1-36"></a>    n_edges,                                      <span class="co"># Number of randomly distributed edges</span></span>
+<span id="cb1-37"><a href="#cb1-37"></a>    <span class="fu">ValDiGraph</span>(                                                </span>
+<span id="cb1-38"><a href="#cb1-38"></a>        <span class="fu">SimpleDiGraph</span><span class="dt">{Int64}</span>(); </span>
+<span id="cb1-39"><a href="#cb1-39"></a>        vertexval_types<span class="op">=</span>(<span class="dt">String</span>,),</span>
+<span id="cb1-40"><a href="#cb1-40"></a>        vertexval_init<span class="op">=</span>default_vertex_metadata,</span>
+<span id="cb1-41"><a href="#cb1-41"></a>        edgeval_types<span class="op">=</span>(<span class="dt">Float64</span>,),</span>
+<span id="cb1-42"><a href="#cb1-42"></a>        edgeval_init<span class="op">=</span>default_edge_metadata,</span>
+<span id="cb1-43"><a href="#cb1-43"></a>    ),</span>
+<span id="cb1-44"><a href="#cb1-44"></a>    <span class="dt">Float64</span>;</span>
+<span id="cb1-45"><a href="#cb1-45"></a>    default_vertex_metadata<span class="op">=</span>default_vertex_metadata, <span class="co"># Vertex metadata </span></span>
+<span id="cb1-46"><a href="#cb1-46"></a>    default_edge_metadata<span class="op">=</span>default_edge_metadata      <span class="co"># Edge metadata </span></span>
+<span id="cb1-47"><a href="#cb1-47"></a>)</span>
+<span id="cb1-48"><a href="#cb1-48"></a></span>
+<span id="cb1-49"><a href="#cb1-49"></a><span class="co"># Create a list of layers </span></span>
+<span id="cb1-50"><a href="#cb1-50"></a>layers <span class="op">=</span> [layer_simple_directed, layer_simple_directed_weighted, layer_simple_directed_value]</span>
+<span id="cb1-51"><a href="#cb1-51"></a></span>
+<span id="cb1-52"><a href="#cb1-52"></a></span>
+<span id="cb1-53"><a href="#cb1-53"></a><span class="co"># Create a simple directed interlayer</span></span>
+<span id="cb1-54"><a href="#cb1-54"></a>n_vertices_1 <span class="op">=</span> <span class="fu">nv</span>(layer_simple_directed)               <span class="co"># Number of vertices of layer 1</span></span>
+<span id="cb1-55"><a href="#cb1-55"></a>n_vertices_2 <span class="op">=</span> <span class="fu">nv</span>(layer_simple_directed_weighted)      <span class="co"># Number of vertices of layer 2</span></span>
+<span id="cb1-56"><a href="#cb1-56"></a>n_edges <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span>(n_vertices_1 <span class="op">*</span> n_vertices_2 <span class="op">-</span> <span class="fl">1</span>))    <span class="co"># Number of interlayer edges </span></span>
+<span id="cb1-57"><a href="#cb1-57"></a>interlayer_simple_directed <span class="op">=</span> <span class="fu">interlayer_simpledigraph</span>( <span class="co"># Interlayer constructor </span></span>
+<span id="cb1-58"><a href="#cb1-58"></a>    layer_simple_directed,                             <span class="co"># Layer 1 </span></span>
+<span id="cb1-59"><a href="#cb1-59"></a>    layer_simple_directed_weighted,                    <span class="co"># Layer 2 </span></span>
+<span id="cb1-60"><a href="#cb1-60"></a>    n_edges                                            <span class="co"># Number of edges </span></span>
+<span id="cb1-61"><a href="#cb1-61"></a>)</span>
+<span id="cb1-62"><a href="#cb1-62"></a></span>
+<span id="cb1-63"><a href="#cb1-63"></a><span class="co"># Create a simple directed meta interlayer </span></span>
+<span id="cb1-64"><a href="#cb1-64"></a>n_vertices_1 <span class="op">=</span> <span class="fu">nv</span>(layer_simple_directed_weighted)   <span class="co"># Number of vertices of layer 1</span></span>
+<span id="cb1-65"><a href="#cb1-65"></a>n_vertices_2 <span class="op">=</span> <span class="fu">nv</span>(layer_simple_directed_value)      <span class="co"># Number of vertices of layer 2</span></span>
+<span id="cb1-66"><a href="#cb1-66"></a>n_edges <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span><span class="op">:</span>(n_vertices_1 <span class="op">*</span> n_vertices_2 <span class="op">-</span> <span class="fl">1</span>)) <span class="co"># Number of interlayer edges </span></span>
+<span id="cb1-67"><a href="#cb1-67"></a>interlayer_simple_directed_meta <span class="op">=</span> <span class="fu">interlayer_metadigraph</span>( <span class="co"># Interlayer constructor</span></span>
+<span id="cb1-68"><a href="#cb1-68"></a>    layer_simple_directed_weighted,                       <span class="co"># Layer 1 </span></span>
+<span id="cb1-69"><a href="#cb1-69"></a>    layer_simple_directed_value,                          <span class="co"># Layer 2</span></span>
+<span id="cb1-70"><a href="#cb1-70"></a>    n_edges;                                              <span class="co"># Number of edges</span></span>
+<span id="cb1-71"><a href="#cb1-71"></a>    default_edge_metadata<span class="op">=</span>(src, dst) <span class="op">-&gt;</span>                   <span class="co"># Edge metadata </span></span>
+<span id="cb1-72"><a href="#cb1-72"></a>        (edge_metadata<span class="op">=</span><span class="st">"metadata_of_edge_from_</span><span class="sc">$</span>(src)<span class="st">_to_</span><span class="sc">$</span>(dst)<span class="st">"</span>,),</span>
+<span id="cb1-73"><a href="#cb1-73"></a>    transfer_vertex_metadata<span class="op">=</span><span class="cn">true</span> <span class="co"># Boolean deciding layer vertex metadata inheritance</span></span>
+<span id="cb1-74"><a href="#cb1-74"></a>)</span>
+<span id="cb1-75"><a href="#cb1-75"></a></span>
+<span id="cb1-76"><a href="#cb1-76"></a><span class="co"># Create a list of interlayers </span></span>
+<span id="cb1-77"><a href="#cb1-77"></a>interlayers <span class="op">=</span> [interlayer_simple_directed, interlayer_simple_directed_meta]</span>
+<span id="cb1-78"><a href="#cb1-78"></a></span>
+<span id="cb1-79"><a href="#cb1-79"></a><span class="co"># Of course all methods such as add/rem_vertex!, add/rem_edge! work as expected on Layers and Interlayers</span></span>
+<span id="cb1-80"><a href="#cb1-80"></a></span>
+<span id="cb1-81"><a href="#cb1-81"></a><span class="co"># Create a simple directed multilayer graph</span></span>
+<span id="cb1-82"><a href="#cb1-82"></a>multilayerdigraph <span class="op">=</span> <span class="fu">MultilayerDiGraph</span>( <span class="co"># Constructor </span></span>
+<span id="cb1-83"><a href="#cb1-83"></a>    layers,                     <span class="co"># The (ordered) collection of layers</span></span>
+<span id="cb1-84"><a href="#cb1-84"></a>    interlayers;                <span class="co"># The manually specified interlayers</span></span>
+<span id="cb1-85"><a href="#cb1-85"></a>                                <span class="co"># The interlayers that are left unspecified </span></span>
+<span id="cb1-86"><a href="#cb1-86"></a>                                <span class="co"># will be automatically inserted according </span></span>
+<span id="cb1-87"><a href="#cb1-87"></a>                                <span class="co"># to the keyword argument below</span></span>
+<span id="cb1-88"><a href="#cb1-88"></a>    default_interlayers_structure<span class="op">=</span><span class="st">"multiplex"</span> </span>
+<span id="cb1-89"><a href="#cb1-89"></a>    <span class="co"># The automatically specified interlayers will have only diagonal couplings</span></span>
+<span id="cb1-90"><a href="#cb1-90"></a>)</span>
+<span id="cb1-91"><a href="#cb1-91"></a></span>
+<span id="cb1-92"><a href="#cb1-92"></a><span class="co"># Layers and interlayer can be accessed as properties using their names</span></span>
+<span id="cb1-93"><a href="#cb1-93"></a>multilayerdigraph.layer_simple_directed_value</span>
+<span id="cb1-94"><a href="#cb1-94"></a>multilayerdigraph.interlayer_layer_simple_directed_layer_simple_directed_weighted <span class="co"># Name is complicated since it was automatically assigned. Whole interlayers chan be automatically specified.</span></span>
+<span id="cb1-95"><a href="#cb1-95"></a></span>
+<span id="cb1-96"><a href="#cb1-96"></a><span class="co"># Create a node </span></span>
+<span id="cb1-97"><a href="#cb1-97"></a>new_node_1 <span class="op">=</span> <span class="fu">Node</span>(<span class="st">"new_node_1"</span>)</span>
+<span id="cb1-98"><a href="#cb1-98"></a><span class="co"># Add the node to the multilayer graph </span></span>
+<span id="cb1-99"><a href="#cb1-99"></a><span class="fu">add_node!</span>(multilayerdigraph, new_node_1)</span>
+<span id="cb1-100"><a href="#cb1-100"></a><span class="co"># Create a vertex representing the node </span></span>
+<span id="cb1-101"><a href="#cb1-101"></a>new_vertex_1 <span class="op">=</span> <span class="fu">MV</span>(                <span class="co"># Constructor (alias for "MultilayerVertex")</span></span>
+<span id="cb1-102"><a href="#cb1-102"></a>    new_node_1,                   <span class="co"># Node represented by the vertex</span></span>
+<span id="cb1-103"><a href="#cb1-103"></a>    <span class="op">:</span>layer_simple_directed_value, <span class="co"># Layer containing the vertex </span></span>
+<span id="cb1-104"><a href="#cb1-104"></a>    (<span class="st">"new_metadata"</span>,)             <span class="co"># Vertex metadata </span></span>
+<span id="cb1-105"><a href="#cb1-105"></a>)</span>
+<span id="cb1-106"><a href="#cb1-106"></a><span class="co"># Add the vertex </span></span>
+<span id="cb1-107"><a href="#cb1-107"></a><span class="fu">add_vertex!</span>(</span>
+<span id="cb1-108"><a href="#cb1-108"></a>    multilayerdigraph, <span class="co"># MultilayerDiGraph the vertex will be added to</span></span>
+<span id="cb1-109"><a href="#cb1-109"></a>    new_vertex_1       <span class="co"># MultilayerVertex to add</span></span>
+<span id="cb1-110"><a href="#cb1-110"></a>)</span>
+<span id="cb1-111"><a href="#cb1-111"></a></span>
+<span id="cb1-112"><a href="#cb1-112"></a><span class="co"># Create another node in another layer </span></span>
+<span id="cb1-113"><a href="#cb1-113"></a>new_node_2 <span class="op">=</span> <span class="fu">Node</span>(<span class="st">"new_node_2"</span>)</span>
+<span id="cb1-114"><a href="#cb1-114"></a><span class="co"># Create another vertex representing the new node</span></span>
+<span id="cb1-115"><a href="#cb1-115"></a>new_vertex_2 <span class="op">=</span> <span class="fu">MV</span>(new_node_2, <span class="op">:</span>layer_simple_directed_value)</span>
+<span id="cb1-116"><a href="#cb1-116"></a><span class="co"># Add the new vertex</span></span>
+<span id="cb1-117"><a href="#cb1-117"></a><span class="fu">add_vertex!</span>(</span>
+<span id="cb1-118"><a href="#cb1-118"></a>    multilayerdigraph,</span>
+<span id="cb1-119"><a href="#cb1-119"></a>    new_vertex_2;</span>
+<span id="cb1-120"><a href="#cb1-120"></a>    add_node<span class="op">=</span><span class="cn">true</span> <span class="co"># Add the associated node before adding the vertex</span></span>
+<span id="cb1-121"><a href="#cb1-121"></a>)</span>
+<span id="cb1-122"><a href="#cb1-122"></a><span class="co"># Create an edge </span></span>
+<span id="cb1-123"><a href="#cb1-123"></a>new_edge <span class="op">=</span> <span class="fu">MultilayerEdge</span>(  <span class="co"># Constructor </span></span>
+<span id="cb1-124"><a href="#cb1-124"></a>    new_vertex_1,           <span class="co"># Source vertex</span></span>
+<span id="cb1-125"><a href="#cb1-125"></a>    new_vertex_2,           <span class="co"># Destination vertex </span></span>
+<span id="cb1-126"><a href="#cb1-126"></a>    (<span class="st">"some_edge_metadata"</span>,) <span class="co"># Edge metadata </span></span>
+<span id="cb1-127"><a href="#cb1-127"></a>)</span>
+<span id="cb1-128"><a href="#cb1-128"></a><span class="co"># Add the edge </span></span>
+<span id="cb1-129"><a href="#cb1-129"></a><span class="fu">add_edge!</span>(</span>
+<span id="cb1-130"><a href="#cb1-130"></a>    multilayerdigraph, <span class="co"># MultilayerDiGraph the edge will be added to</span></span>
+<span id="cb1-131"><a href="#cb1-131"></a>    new_edge           <span class="co"># MultilayerVertex to add</span></span>
+<span id="cb1-132"><a href="#cb1-132"></a>)</span>
+<span id="cb1-133"><a href="#cb1-133"></a></span>
+<span id="cb1-134"><a href="#cb1-134"></a><span class="co"># Compute the global clustering coefficient</span></span>
+<span id="cb1-135"><a href="#cb1-135"></a><span class="fu">multilayer_global_clustering_coefficient</span>(multilayerdigraph) </span>
+<span id="cb1-136"><a href="#cb1-136"></a><span class="co"># Compute the overlay clustering coefficient</span></span>
+<span id="cb1-137"><a href="#cb1-137"></a><span class="fu">overlay_clustering_coefficient</span>(multilayerdigraph)</span>
+<span id="cb1-138"><a href="#cb1-138"></a><span class="co"># Compute the multilayer eigenvector centrality </span></span>
+<span id="cb1-139"><a href="#cb1-139"></a><span class="fu">eigenvector_centrality</span>(multilayerdigraph)</span>
+<span id="cb1-140"><a href="#cb1-140"></a><span class="co"># Compute the multilayer modularity </span></span>
+<span id="cb1-141"><a href="#cb1-141"></a><span class="fu">modularity</span>(</span>
+<span id="cb1-142"><a href="#cb1-142"></a>    multilayerdigraph,</span>
+<span id="cb1-143"><a href="#cb1-143"></a>    <span class="fu">rand</span>([<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>], <span class="fu">length</span>(<span class="fu">nodes</span>(multilayerdigraph)), <span class="fu">length</span>(multilayerdigraph.layers))</span>
+<span id="cb1-144"><a href="#cb1-144"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section></section>
+<section>
+<section id="thanks" class="title-slide slide level1 center">
+<h1>Thanks <span class="emoji" data-emoji="pray">🙏</span></h1>
+
+</section>
+<section class="slide level2">
+
+<h3 id="outline-1">Outline</h3>
+<p><span class="emoji" data-emoji="one">1️⃣</span> <a href="#/Theory">Theory</a></p>
+<p><span class="emoji" data-emoji="two">2️⃣</span> <a href="#/Applications">Applications</a></p>
+<p><span class="emoji" data-emoji="three">3️⃣</span> <a href="#/Practice">Practice</a></p>
+<h3 id="resources-1">Resources</h3>
+<p><img data-src="images/logo/GitHub.svg" class="absolute" style="left: 0px; bottom: 302px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl">Repository</a></p>
+<p><img data-src="images/logo/JOSS.png" class="absolute" style="left: 0px; bottom: 237px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://doi.org/10.21105/joss.05116">Paper</a></p>
+<p><img data-src="images/logo/JuliaDots.svg" class="absolute" style="left: 0px; bottom: 176px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://juliagraphs.org/MultilayerGraphs.jl">Documentation</a></p>
+<p><img data-src="images/logo/Discourse.png" class="absolute" style="left: 0px; bottom: 113px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Post (<a href="https://discourse.julialang.org/t/ann-multilayergraphs-jl-a-package-to-construct-handle-and-analyse-multilayer-graphs/85988">v0.1</a>, <a href="https://discourse.julialang.org/t/ann-multilayergraphs-jl-v1-1-multilayer-network-science-in-julia/92680">v1.1</a>)</p>
+<p><img data-src="images/logo/Twitter.png" class="absolute" style="left: 0px; bottom: 51px; width: 4%; "> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread (<a href="https://twitter.com/In_Phy_T/status/1560594513189638146">v0.1</a>, <a href="https://twitter.com/In_Phy_T/status/1612460371939581955">v1.1</a>)</p>
+<p><img data-src="images/logo/MultilayerGraphs.png" class="absolute" style="bottom: 190px; right: 0px; width: 40%; "></p>
+<p><img src="images/logo/JuliaCon.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="https://github.com/JuliaGraphs/MultilayerGraphs.jl">MultilayerGraphs.jl: Multilayer Network Science in Julia</a></p>
+</div>
+</section></section>
     </div>
   </div>
 

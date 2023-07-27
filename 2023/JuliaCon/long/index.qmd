@@ -2,3 +2,791 @@
 title: "MultilayerGraphs.jl"
 subtitle: "Multilayer Network Science in Julia"
 ---
+
+# :clapper: Introduction 
+
+---
+
+### Outline 
+
+:one: [Theory](#Theory)
+
+:two: [Applications](#Applications)
+
+:three: [Practice](#Practice)
+
+### Resources 
+
+![](images/logo/GitHub.svg){.absolute bottom=302 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Repository](https://github.com/JuliaGraphs/MultilayerGraphs.jl) 
+
+![](images/logo/JOSS.png){.absolute bottom=237 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Paper](https://doi.org/10.21105/joss.05116) 
+
+![](images/logo/JuliaDots.svg){.absolute bottom=176 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Documentation](https://juliagraphs.org/MultilayerGraphs.jl/dev)
+
+![](images/logo/Discourse.png){.absolute bottom=113 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Post ([v0.1](https://discourse.julialang.org/t/ann-multilayergraphs-jl-a-package-to-construct-handle-and-analyse-multilayer-graphs/85988), [v1.1](https://discourse.julialang.org/t/ann-multilayergraphs-jl-v1-1-multilayer-network-science-in-julia/92680))
+
+![](images/logo/Twitter){.absolute bottom=51 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread ([v0.1](https://twitter.com/In_Phy_T/status/1560594513189638146), [v1.1](https://twitter.com/In_Phy_T/status/1612460371939581955))
+
+![](images/logo/MultilayerGraphs.png){.absolute bottom=190 right=0 width=40%}
+
+# :notebook: Theory 
+
+## Conceptual Framework {.smaller}
+
+:::: {.columns}
+
+::: {.column width="60%"}
+- Network 
+- Graph
+- Vertex ([`MultilayerVertex`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerVertex))
+- Node ([`Node`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.Node))
+- Layer ([`Layer`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.Layer))
+- Intra-layer edge ([`MultilayerEdge`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerEdge))
+- Inter-layer edge ([`MultilayerEdge`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerEdge))
+- Interlayer ([`Interlayer`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.Interlayer))
+- Multilayer ([`MultilayerGraph`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.MultilayerGraph))
+:::
+
+::: {.column width="40%"}
+![](images/books/basics.png){.absolute bottom=50 right=-250 width=75%}
+:::
+
+::::
+
+::: aside
+Figure from [De Domenico (2022)](https://doi.org/10.1007/978-3-030-75718-2).
+:::
+
+## Conceptual Framework {.smaller}
+
+:::: {.columns}
+
+::: {.column width="60%"}
+#### Intra-layer Interactions
+- Self 
+- Endogenous 
+:::
+
+::: {.column width="40%"}
+#### Inter-layer interactions
+- Exogenous 
+- Intertwining
+:::
+
+::::
+
+![](images/books/taxonomy.png){.absolute bottom=80 right=120 width=80%}
+
+::: aside
+Figure from [De Domenico (2022)](https://doi.org/10.1007/978-3-030-75718-2).
+:::
+
+## Mathematical Framework {.smaller}
+
+:::: {.columns}
+
+::: {.column width="70%"}
+#### Mono-Layer Adjacency Tensor ([`WeightTensor`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.WeightTensor))
+
+\begin{align*}
+W_j^i&=\sum_{a, b=1}^N w_{a b} e^i(a) e_j(b)=\sum_{a, b=1}^N w_{a b} E_j^i(a b)
+\end{align*}
+
+#### Multi-Layer Adjacency Tensor ([`WeightTensor`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.WeightTensor))
+
+\begin{align*}
+M_{j \beta}^{i \alpha}&=\sum_{a, b=1}^N \sum_{p, q=1}^L w_{a b}(p q) e^i(a) e_j(b) e^\alpha(p) e_\beta(q) \\ 
+&=\underbrace{m_{i \alpha}^{j \beta} \delta_\alpha^\beta \delta_i^j+m_{i \alpha}^{j \beta} \delta_\alpha^\beta\left(1-\delta_i^j\right)}_{\text {intra-layer}}+\underbrace{m_{i \alpha}^{j \beta}\left(1-\delta_\alpha^\beta\right) \delta_i^j+m_{i \alpha}^{j \beta}\left(1-\delta_\alpha^\beta\right)\left(1-\delta_i^j\right)}_{\text {inter-layer}} \\
+&=\underbrace{m_{i \alpha}^{i \alpha}}_{\text {self}}+\underbrace{m_{i \alpha}^{j \alpha}}_{\text {endogenous}}+\underbrace{m_{i \alpha}^{j \beta}}_{\text {exogenous}}+\underbrace{m_{i \alpha}^{i \beta}}_{\text {intertwining}}
+\end{align*}
+:::
+
+::: {.column width="50%"}
+:::
+
+::::
+
+## Mathematical Framework {.smaller}
+
+#### Supra-Adjacency Matrix ([`SupraWeightMatrix`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.SupraWeightMatrix))
+
+![](images/books/supra-adjacency-matrix.png){.absolute bottom=120 right=100 width=85%}
+
+::: aside
+Figure from [De Domenico (2022)](https://doi.org/10.1007/978-3-030-75718-2).
+:::
+
+## Mathematical Framework {.smaller}
+
+### Metrics
+
+#### Degree Centrality ([`degree`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#Graphs.degree-Union{Tuple{V},%20Tuple{M},%20Tuple{Type{IsDirected{M}},%20M,%20V}}%20where%20{M%3C:AbstractMultilayerGraph,%20V%3C:MultilayerVertex}))
+
+$k_i=\sum_{\alpha, \beta=1}^L \sum_{j=1}^N M_{j \beta}^{i \alpha}=M_{j \beta}^{i \alpha} u_\alpha^\beta u^j$
+
+#### Eigenvector Centrality ([`eigenvector_centrality`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#Graphs.eigenvector_centrality-Union{Tuple{M},%20Tuple{U},%20Tuple{T}}%20where%20{T,%20U,%20M%3C:AbstractMultilayerGraph{T,%20U}}))
+$\sum_{i, \alpha} M_{j \beta}^{i \alpha} \Theta_{i \alpha}=\lambda_1 \Theta_{j \beta}$
+
+#### Modularity ([`modularity`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#Graphs.modularity-Union{Tuple{M},%20Tuple{U},%20Tuple{T},%20Tuple{M,%20Matrix{Int64}}}%20where%20{T,%20U,%20M%3C:AbstractMultilayerGraph{T,%20U}}))
+
+$Q=\frac{1}{\mathcal{K}} S_{\alpha \tilde{\rho}}^a B_{\beta \tilde{\sigma}}^{\alpha \tilde{\rho}} S_a^{\beta \tilde{\sigma}}$
+
+#### Von Neumann Entropy ([`von_neumann_entropy`](https://juliagraphs.org/MultilayerGraphs.jl/dev/API/#MultilayerGraphs.von_neumann_entropy-Union{Tuple{M},%20Tuple{U},%20Tuple{T},%20Tuple{Type{Not{IsDirected{M}}},%20M}}%20where%20{T,%20U,%20M%3C:AbstractMultilayerGraph{T,%20U}}))
+
+$\mathcal{H}(M)=-\Lambda_{\beta \tilde{\delta}}^{\alpha \tilde{\gamma}} \log _2\left[\Lambda_{\alpha \tilde{\gamma}}^{\beta \tilde{\delta}}\right]$
+
+# :microscope: Applications 
+
+## Multilayer Network Epidemiology {.smaller}
+
+![](images/articles/Aleta2020-model.webp){.absolute top=120 left=0 width=50%}
+![](images/articles/Aleta2022.jpeg){.absolute top=120 right=-100 width=50%}
+
+::: {.aside}
+Figures from [Aleta et al. (2020)](https://doi.org/10.1038/s41562-020-0931-9) and [Aleta et al. (2022)](https://doi.org/10.1073/pnas.2112182119).
+:::
+
+# :dart: Future Developments
+
+## Future Developments {.smaller}
+
+- Import/export
+- Data visualisation
+- Coverage evolution (e.g. see [De Domenico (2014)](https://doi.org/10.1073/pnas.1318469111))
+- Community detection algorithms (e.g. see [De Domenico et al. (2015)](https://doi.org/10.1103/PhysRevX.5.011027))
+- Laplacian matrix
+- Components (e.g. connected, giant connected, giant intersection, giant viable)
+- Multiplexity dimensions ("aspects")
+- Global descriptors (e.g. see [De Domenico (2013)](https://doi.org/10.1103/PhysRevX.3.041022));
+- More multilayer centralities / versatilities (e.g. see [De Domenico et al. (2015)](https://doi.org/10.1038/ncomms7868));
+- ...
+
+For further information see the related [issues](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues).
+
+# :package: Related Packages 
+
+## Related Packages 
+
+![](images/logo/Python.png){.absolute top=80 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [`MultiNetX`](https://github.com/nkoub/multinetx) 
+
+![](images/logo/Python.png){.absolute top=147 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [`PyMNet`](https://github.com/bolozna/Multilayer-networks-library) 
+
+<br>
+
+![](images/logo/R.png){.absolute top=278 left=0 width=5%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [`muxViz`](https://github.com/manlius/muxViz) 
+
+![](images/logo/R.png){.absolute top=340 left=0 width=5%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [`multinet`](https://github.com/cran/multinet) 
+
+![](images/logo/R.png){.absolute top=406 left=0 width=5%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [`mully`](https://github.com/frankkramer-lab/mully)
+
+![](images/logo/R.png){.absolute top=470 left=0 width=5%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [`multinets`](https://github.com/neylsoncrepalde/multinets)
+
+# :books: References
+
+## Theory {.smaller}
+
+:::: {.columns}
+
+::: {.column width="40%"}
+1. [De Domenico et al. (2013)](https://doi.org/10.1103/PhysRevX.3.041022)
+2. [Kivelä et al. (2014)](https://doi.org/10.1093/comnet/cnu016)
+3. [Boccaletti et al. (2014)](https://doi.org/10.1016/j.physrep.2014.07.001)
+4. [Lee et al. (2015)](https://doi.org/10.1140/epjb/e2015-50742-1)
+5. [Bianconi (2018)](https://global.oup.com/academic/product/multilayer-networks-9780192865540)
+6. [Cozzo et al. (2018)](https://doi.org/10.1007/978-3-319-92255-3)
+7. [Aleta and Moreno (2019)](https://doi.org/10.1146/annurev-conmatphys-031218-013259)
+8. [Artime et al. (2022)](https://doi.org/10.1017/9781009085809) 
+9. [De Domenico (2022)](https://doi.org/10.1007/978-3-030-75718-2)
+:::
+
+::: {.column width="60%"}
+![](images/books/Bianconi2018.png){.absolute top=-25 right=300 width=23%}
+![](images/books/Artime2022.png){.absolute bottom=0 right=300 width=23%}
+![](images/books/DeDomenico2022.webp){.absolute bottom=170 right=0 width=27%}
+:::
+
+::::
+
+## Applications {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+1. [Cozzo et al. (2013)](https://doi.org/10.1103/physreve.88.050801)
+2. [Granell et al. (2013)](https://doi.org/10.1103/physrevlett.111.128701)
+3. [Massaro and Bagnoli (2014)](https://doi.org/10.1103/physreve.90.052817)
+4. [Estrada and Gomez-Gardenes (2014)](https://doi.org/10.1103/physreve.89.042819)
+5. [De Domenico et al. (2016)](https://doi.org/10.1038/nphys3865)
+6. [Amato et al. (2017)](https://doi.org/10.1038/s41598-017-06933-2)
+7. [De Domenico (2017)](https://doi.org/10.1093/gigascience/gix004)
+8.  [Pilosof et al. (2017)](https://doi.org/10.1038/s41559-017-0101)
+9.  [Lim et al. (2019)](https://doi.org/10.1038/s41598-019-39243-w)
+10. [Mangioni et al. (2020)](https://doi.org/10.1109/tnse.2018.2871726)
+11. [Aleta et al. (2020)](https://doi.org/10.1038/s41562-020-0931-9)
+12. [Aleta et al. (2022)](https://doi.org/10.1073/pnas.2112182119)
+:::
+
+::: {.column width="50%"}
+![](images/articles/Pilosof2017.webp){.absolute bottom=10 right=30 width=40%}
+:::
+
+<!-- https://github.com/quarto-dev/quarto-cli/discussions/4572 -->
+```{=html}
+<style>
+.semi-transparent {
+  opacity: 0.3;
+}
+</style>
+
+<style>
+.center-y {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+</style>
+```
+
+::::
+
+# :computer: Practice 
+
+---
+
+In this section, we are going to see:
+
+1. Overview of `Graphs.jl`;
+2. Main design features;
+3. Brief showcase;
+4. Future developments.
+
+# [Practice]{.semi-transparent} {.smaller}
+
+[In this section, we are going to see:]{.semi-transparent}
+
+1. Overview of `Graphs.jl`:
+
+    1.1 How is `MultilayerGraphs.jl` inspired by and built around `Graphs.jl`?
+
+    1.2 Traits usage.
+
+[2. Main design features;]{.semi-transparent}
+
+[3. Brief showcase.]{.semi-transparent}
+
+[4. Future developments;]{.semi-transparent}
+
+## Overview of `Graphs.jl`: How is `MultilayerGraphs.jl` inspired by and built around `Graphs.jl`? {.smaller}
+
+1. Julia's graph ecosystem is built around `Graphs.jl`;
+
+. . .
+
+2. `Graphs.jl` is thought to be extended by being built around a [minimal set of APIs](https://juliagraphs.org/`Graphs.jl`/dev/ecosystem/interface/): (`edges`,`Base.eltype`,`edgetype`,`has_edge`,`has_vertex`,`inneighbors`,`ne`,`nv`,`outneighbors`,`vertices`,`is_directed`);
+
+. . .
+
+3. Once you have overloaded the above methods on `YourGraphType` (coming from `YourGraphPackage`), then you may use all Graphs.jl's metrics and methods:
+
+```{.julia}
+using Graphs
+using YourGraphPackage
+
+your_graph = YourGraphType()
+Graphs.clustering_coefficient(your_graph)
+```
+
+<!-- . . .
+
+3. Within `Graphs.jl`, graphs are represented using *forward* and *backward adjacency lists*, and great care is taken to have the vertices always in *increasing order* with no gaps. -->
+
+
+## Overview of `Graphs.jl`: Traits usage #1
+
+- Single-inheritance + traits = multiple-inheritance(-ish);
+
+. . .
+
+- Traits as properties.
+
+---
+
+## Overview of `Graphs.jl`: Traits usage #2 {.smaller}
+
+
+```{.julia}
+# Suppose we have the following abstract_graph types:
+abstract type abstract_graph end
+struct simple_graph <: abstract_graph end
+struct simple_directed_graph <: abstract_graph end
+```
+
+::: {.fragment}
+```{.julia}
+# Basically, traits are given via a type hierarchy:
+abstract type Directedness end
+struct Directed <: Directedness end
+struct Undirected <: Directedness end
+```
+:::
+
+
+::: {.fragment}
+```{.julia}
+# Graph types are assigned their respective trait:
+Directedness(::Type{simple_graph}) = Undirected()
+Directedness(::Type{simple_directed_graph}) = Directed()
+```
+:::
+
+
+::: {.fragment}
+```{.julia}
+# And finally dispatch can be implemented:
+function add_edge!(::Directed, ::abstract_graph, new_edge)
+  # ...
+end
+
+function add_edge!(::Undirected, ::abstract_graph, new_edge)
+  # ...
+end
+```
+:::
+
+::: {.fragment}
+```{.julia}
+# So that the API can look like:
+add_edge!(g::simple_graph, new_edge) = add_edge!(Directedness(g), g, new_edge)
+```
+:::
+
+---
+
+## Overview of `Graphs.jl`: Traits usage #3
+
+::: {.center-y}
+*Traits stratify types horizontally while (single) inheritance stratifies vertically (i.e. creates a type hierarchy).*
+:::
+
+# [Practice]{.semi-transparent} {.smaller}
+
+[In this section, we are going to see:]{.semi-transparent}
+
+
+[1. Overview of `Graphs.jl`]{.semi-transparent}
+
+2. Main design features:
+
+    2.1 Sub-ecosystem;
+
+    2.2 Standalone graph types > graph wrappers;
+
+    2.3 Main structs.
+
+[3. Brief showcase.]{.semi-transparent}
+
+[4. Future developments;]{.semi-transparent}
+
+---
+
+## Main design features: Sub-ecosystem {.smaller}
+
+- MultilayerGraphs.jl aims to be a *sub-ecosystem* of `Graphs.jl`, specialized in multilayer graphs;
+
+. . .
+
+- This is made possible by the *multiple inheritance* as explained earlier:
+
+    - Hierarchical relations are given by single inheritance (e.g. `MultilayerGraph <: AbstractMultilayerGraph`);
+
+    - Variants of the same type of multilayer graph are distinguished by traits (e.g. `MultilayerDiGraph` is given the `IsDirected` trait while `MultilayerGraph` is not).
+
+## Main design features: Standalone graph types > graph wrappers 
+
+- Many attempts were made to implement `MultilayerGraphs.jl` as a *wrapper package*;
+
+
+. . .
+
+- Implementing a wrapper package looks easier than a *full implementation* at first...
+
+. . .
+
+- ...but it becomes nightmare-ish when one needs to modify graphs due to *function duplication* and *consistency checks*.
+
+
+## Main design features: main structs #1 {.smaller}
+
+Nodes:
+```{.julia}
+struct Node <: AbstractNode
+    id::String
+end
+```
+
+. . .
+
+Vertices:
+
+```{.julia}
+struct MultilayerVertex
+    node::Node
+    layer::Union{Nothing,Symbol}
+    metadata::Union{<:NamedTuple,<:Tuple}
+end
+```
+
+. . .
+
+Edges:
+```{.julia}
+struct MultilayerEdge{U<:Union{<:Real,Nothing}} <: AbstractMultilayerEdge{U}
+    src::AbstractMultilayerVertex
+    dst::AbstractMultilayerVertex
+    weight::U
+    metadata::Union{NamedTuple,Tuple}
+end
+```
+
+
+## Main design features: main structs #2 {.smaller}
+
+
+
+```{.julia}
+# Layers
+mutable struct Layer{T<:Integer,U<:Real,G<:AbstractGraph{T}} <: AbstractLayer{T,U,G}
+    name::Symbol,
+    vertices::Union{Vector{MultilayerVertex{nothing}},Vector{Node}},
+    edge_list::Union{Vector{<:MultilayerEdge},Vector{NTuple{2,MultilayerVertex{nothing}}}},
+    null_graph::G,
+    weighttype::Type{U};
+    default_vertex_metadata::Function=mv -> NamedTuple(),
+    default_edge_weight::Function=(src, dst) -> one(U),
+    default_edge_metadata::Function=(src, dst) -> NamedTuple(),
+end
+```
+
+. . .
+
+
+```{.julia}
+# Interlayers
+struct Interlayer{T,U}
+    layer_1::Layer{T,U},
+    layer_2::Layer{T,U},
+    null_graph::G,
+    edge_list::Union{
+        <:Vector{<:MultilayerEdge{<:Union{U,Nothing}}},
+        <:Vector{<:Tuple{<:MultilayerVertex,<:MultilayerVertex}},
+    };
+    default_edge_weight::Function=(x, y) -> nothing,
+    default_edge_metadata::Function=(x, y) -> NamedTuple(),
+    transfer_vertex_metadata::Bool=false,
+    interlayer_name::Symbol=Symbol("interlayer_$(layer_1.name)_$(layer_2.name)")
+end
+```
+
+
+## Main design features: main structs #3
+
+Undirected, general multilayer graph:
+```{.julia}
+mutable struct MultilayerGraph{T,U} <: AbstractMultilayerGraph{T,U}
+    layers::Vector{LayerDescriptor{T,U}}
+    interlayers::OrderedDict{Set{Symbol},InterlayerDescriptor{T,U}} 
+    v_V_associations::Bijection{T,<:MultilayerVertex}
+    idx_N_associations::Bijection{Int64,Node}
+    fadjlist::Vector{Vector{HalfEdge{<:MultilayerVertex,<:Union{Nothing,U}}}}
+    v_metadata_dict::Dict{T,<:Union{<:Tuple,<:NamedTuple}}
+end
+```
+
+Weight tensor:
+
+```{.julia}
+struct WeightTensor{U<:Real} <: AbstractTensorRepresentation
+    array::Array{U,4}
+    layers_names::Vector{Symbol}
+    idx_N_associations::Bijection{Int64,Node}
+end
+```
+
+
+# [Practice]{.semi-transparent} {.smaller}
+
+[In this section, we are going to see:]{.semi-transparent}
+
+
+[1. Overview of `Graphs.jl`]{.semi-transparent}
+
+[2. Main design features;]{.semi-transparent}
+
+3. Brief showcase:
+
+    3.1 Tutorial;
+    
+    3.2 Pretty console prints.
+
+
+[4. Future developments:]{.semi-transparent}
+
+---
+
+## Brief showcase: Tutorial {.smaller}
+
+```{.julia}
+# Import necessary dependencies
+using Distributions, Graphs, SimpleValueGraphs
+using MultilayerGraphs
+# Set the number of nodes
+const n_nodes = 100 
+# Create a list of nodes
+const node_list = [Node("node_$i") for i in 1:n_nodes]
+
+# Create a simple directed layer
+n_vertices = rand(1:100)                          # Number of vertices 
+layer_simple_directed = layer_simpledigraph(      # Layer constructor 
+    :layer_simple_directed,                       # Layer name
+    sample(node_list, n_vertices; replace=false), # Nodes represented in the layer
+    Truncated(Normal(5, 5), 0, 20), # Indegree sequence distribution 
+    Truncated(Normal(5, 5), 0, 20)  # Outdegree sequence distribution
+)
+
+# Create a simple directed weighted layer
+n_vertices = rand(1:n_nodes)                                   # Number of vertices 
+n_edges = rand(n_vertices:(n_vertices * (n_vertices - 1) - 1)) # Number of edges 
+layer_simple_directed_weighted = layer_simpleweighteddigraph(  # Layer constructor 
+    :layer_simple_directed_weighted,                           # Layer name
+    sample(node_list, n_vertices; replace=false), # Nodes represented in the layer
+    n_edges;                                 # Number of randomly distributed edges
+    default_edge_weight=(src, dst) -> rand() # Function assigning weights to edges 
+)
+
+# Create a simple directed value layer
+n_vertices = rand(1:n_nodes)                                   # Number of vertices 
+n_edges = rand(n_vertices:(n_vertices * (n_vertices - 1) - 1)) # Number of edges 
+default_vertex_metadata = v -> ("vertex_$(v)_metadata",)       # Vertex metadata 
+default_edge_metadata = (s, d) -> (rand(),)                    # Edge metadata 
+layer_simple_directed_value = Layer(                           # Layer constructor
+    :layer_simple_directed_value,                              # Layer name
+    sample(node_list, n_vertices; replace=false), # Nodes represented in the layer
+    n_edges,                                      # Number of randomly distributed edges
+    ValDiGraph(                                                
+        SimpleDiGraph{Int64}(); 
+        vertexval_types=(String,),
+        vertexval_init=default_vertex_metadata,
+        edgeval_types=(Float64,),
+        edgeval_init=default_edge_metadata,
+    ),
+    Float64;
+    default_vertex_metadata=default_vertex_metadata, # Vertex metadata 
+    default_edge_metadata=default_edge_metadata      # Edge metadata 
+)
+
+# Create a list of layers 
+layers = [layer_simple_directed, layer_simple_directed_weighted, layer_simple_directed_value]
+
+
+# Create a simple directed interlayer
+n_vertices_1 = nv(layer_simple_directed)               # Number of vertices of layer 1
+n_vertices_2 = nv(layer_simple_directed_weighted)      # Number of vertices of layer 2
+n_edges = rand(1:(n_vertices_1 * n_vertices_2 - 1))    # Number of interlayer edges 
+interlayer_simple_directed = interlayer_simpledigraph( # Interlayer constructor 
+    layer_simple_directed,                             # Layer 1 
+    layer_simple_directed_weighted,                    # Layer 2 
+    n_edges                                            # Number of edges 
+)
+
+# Create a simple directed meta interlayer 
+n_vertices_1 = nv(layer_simple_directed_weighted)   # Number of vertices of layer 1
+n_vertices_2 = nv(layer_simple_directed_value)      # Number of vertices of layer 2
+n_edges = rand(1:(n_vertices_1 * n_vertices_2 - 1)) # Number of interlayer edges 
+interlayer_simple_directed_meta = interlayer_metadigraph( # Interlayer constructor
+    layer_simple_directed_weighted,                       # Layer 1 
+    layer_simple_directed_value,                          # Layer 2
+    n_edges;                                              # Number of edges
+    default_edge_metadata=(src, dst) ->                   # Edge metadata 
+        (edge_metadata="metadata_of_edge_from_$(src)_to_$(dst)",),
+    transfer_vertex_metadata=true # Boolean deciding layer vertex metadata inheritance
+)
+
+# Create a list of interlayers 
+interlayers = [interlayer_simple_directed, interlayer_simple_directed_meta]
+
+# Of course all methods such as add/rem_vertex!, add/rem_edge! work as expected on Layers and Interlayers
+
+# Create a simple directed multilayer graph
+multilayerdigraph = MultilayerDiGraph( # Constructor 
+    layers,                     # The (ordered) collection of layers
+    interlayers;                # The manually specified interlayers
+                                # The interlayers that are left unspecified 
+                                # will be automatically inserted according 
+                                # to the keyword argument below
+    default_interlayers_structure="multiplex" 
+    # The automatically specified interlayers will have only diagonal couplings
+)
+
+# Layers and interlayer can be accessed as properties using their names
+multilayerdigraph.layer_simple_directed_value
+multilayerdigraph.interlayer_layer_simple_directed_layer_simple_directed_weighted # Name is complicated since it was automatically assigned. Whole interlayers chan be automatically specified.
+
+# Create a node 
+new_node_1 = Node("new_node_1")
+# Add the node to the multilayer graph 
+add_node!(multilayerdigraph, new_node_1)
+# Create a vertex representing the node 
+new_vertex_1 = MV(                # Constructor (alias for "MultilayerVertex")
+    new_node_1,                   # Node represented by the vertex
+    :layer_simple_directed_value, # Layer containing the vertex 
+    ("new_metadata",)             # Vertex metadata 
+)
+# Add the vertex 
+add_vertex!(
+    multilayerdigraph, # MultilayerDiGraph the vertex will be added to
+    new_vertex_1       # MultilayerVertex to add
+)
+
+# Create another node in another layer 
+new_node_2 = Node("new_node_2")
+# Create another vertex representing the new node
+new_vertex_2 = MV(new_node_2, :layer_simple_directed_value)
+# Add the new vertex
+add_vertex!(
+    multilayerdigraph,
+    new_vertex_2;
+    add_node=true # Add the associated node before adding the vertex
+)
+# Create an edge 
+new_edge = MultilayerEdge(  # Constructor 
+    new_vertex_1,           # Source vertex
+    new_vertex_2,           # Destination vertex 
+    ("some_edge_metadata",) # Edge metadata 
+)
+# Add the edge 
+add_edge!(
+    multilayerdigraph, # MultilayerDiGraph the edge will be added to
+    new_edge           # MultilayerVertex to add
+)
+
+# Compute the global clustering coefficient
+multilayer_global_clustering_coefficient(multilayerdigraph) 
+# Compute the overlay clustering coefficient
+overlay_clustering_coefficient(multilayerdigraph)
+# Compute the multilayer eigenvector centrality 
+eigenvector_centrality(multilayerdigraph)
+# Compute the multilayer modularity 
+modularity(
+    multilayerdigraph,
+    rand([1, 2, 3, 4], length(nodes(multilayerdigraph)), length(multilayerdigraph.layers))
+)
+```
+
+## Brief showcase: Pretty console prints {.scrollable}
+
+![](images/practice/multilayerdigraph_console_print.png){.absolute height=70%}
+
+
+# [Practice]{.semi-transparent} {.smaller}
+
+[In this section, we are going to see:]{.semi-transparent}
+
+
+[1. Overview of `Graphs.jl`]{.semi-transparent}
+
+[2. Main design features;]{.semi-transparent}
+
+[3. Brief showcase.]{.semi-transparent}
+
+4. Future developments:
+
+    4.1 Systematize the sub-ecosystem interface;
+
+    4.2 Implement dimensions of multiplexity (aspects);
+
+    4.3 Implement more graph algorithms;
+
+    4.4 Implement more functionalities.
+---
+
+
+## Future developments: Systematize the sub-ecosystem interface
+
+Desiderata:
+
+1. Agree on a set of APIs the external contributor should implement, and allow this to happen by restructuring the code;
+
+. . .
+
+
+2. Systematize the matter in a dedicated section of the documentation.
+
+## Future developments: Implement dimensions of multiplexity (aspects) {.smaller}
+
+Most urgent contribution:
+
+- Allow to have more `Layer`s on the same **dimension of multiplicity**;
+
+Some related technical ToDos are:
+
+1. Transition from a `Vector{Layer}` to an `OrderedDict{String, Vector{Layer}}` to store Layer (descriptors) inside the multilayer graph;
+2. Implement an `add_aspect!` function;
+3. Modify `add_layer!` so that it also requires the `aspect` the `Layer` should be assigned to;
+4. Implications on representations?
+
+## Future developments: Implement more graph algorithms {.smaller}
+
+See issues:
+
+- [Implement multilayer community detection algorithms](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/94);
+- [Implement components](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/93)
+- [Implement coverage evolution](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/92)
+- [Implement Laplacian matrix](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/91)
+- [Implement global descriptors](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/90)
+- [Implement the multiplexity centrality](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/89)
+- [Implement multilayer Page Rank centrality](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/87)
+- [Implement multilayer Katz centrality](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/86)
+- [Implement multilayer hub centrality](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/85)
+- [Implement multilayer closeness centrality](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/84)
+
+
+## Future developments: Implement more functionalities {.smaller}
+
+See issues:
+
+- [Add IO functionality to import / export multilayer network data in various formats](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/82)
+- [Add to add_layer! a kwarg that allows the user to specify some new interlayers, skipping the instantiation of the default ones. enhancement](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/63)
+- [Allow configuration models to specify a minimum discrepancy between the sampled (di)graphical sequence(s) and the provided distribution](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/62)
+- [Improve integration with Agents.jl](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/61)
+- [Implement multilayer graph data visualisation functionalities (or a new package)](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/54)
+- [Implement a fully-fledged multilayer configuration model / graph generator](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/48)
+- [Implement configuration models / graph generators for interlayers](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/46)
+- [Implement projected monoplex and overlay graphs](https://github.com/JuliaGraphs/MultilayerGraphs.jl/issues/35)
+
+# Thanks :pray:
+
+---
+
+### Outline 
+
+:one: [Theory](#Theory)
+
+:two: [Applications](#Applications)
+
+:three: [Practice](#Practice)
+
+### Resources 
+
+![](images/logo/GitHub.svg){.absolute bottom=302 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Repository](https://github.com/JuliaGraphs/MultilayerGraphs.jl) 
+
+![](images/logo/JOSS.png){.absolute bottom=237 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Paper](https://doi.org/10.21105/joss.05116) 
+
+![](images/logo/JuliaDots.svg){.absolute bottom=176 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Documentation](https://juliagraphs.org/MultilayerGraphs.jl)
+
+![](images/logo/Discourse.png){.absolute bottom=113 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Post ([v0.1](https://discourse.julialang.org/t/ann-multilayergraphs-jl-a-package-to-construct-handle-and-analyse-multilayer-graphs/85988), [v1.1](https://discourse.julialang.org/t/ann-multilayergraphs-jl-v1-1-multilayer-network-science-in-julia/92680))
+
+![](images/logo/Twitter){.absolute bottom=51 left=0 width=4%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread ([v0.1](https://twitter.com/In_Phy_T/status/1560594513189638146), [v1.1](https://twitter.com/In_Phy_T/status/1612460371939581955))
+
+![](images/logo/MultilayerGraphs.png){.absolute bottom=190 right=0 width=40%}
